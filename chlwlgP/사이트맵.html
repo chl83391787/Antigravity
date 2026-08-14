@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플로뜰리에 (Flottelier) - 13대 가상 클라이언트 마스터 사이트맵 (Sitemap v3.0)</title>
+  
+  <!-- Typography (Google Fonts: Noto Serif KR & Noto Sans KR & Cormorant Garamond) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --color-text-main: #232527;
+      --color-text-sub: #585D62;
+      --color-text-muted: #8E949A;
+      --color-border: rgba(220, 225, 225, 0.75);
+      --color-accent-terracotta: #C47A5A;
+      --color-accent-sage: #7E8D7F;
+      --color-accent-navy: #2B6CB0;
+      --color-bg-card: rgba(255, 255, 255, 0.94);
+      
+      --font-serif: 'Noto Serif KR', 'Cormorant Garamond', serif;
+      --font-sans: 'Noto Sans KR', sans-serif;
+      --transition-fluid: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #FAFDFD;
+      color: var(--color-text-main);
+      line-height: 1.8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 120px;
+    }
+
+    /* Seamless Watercolor Background */
+    .full-background-watercolor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .blob-1 {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(215, 240, 242, 0.75) 0%, rgba(230, 245, 238, 0.5) 40%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(80px);
+      animation: floatMira1 24s infinite alternate ease-in-out;
+    }
+
+    .blob-2 {
+      position: absolute;
+      bottom: 10%;
+      right: -10%;
+      width: 65vw;
+      height: 65vw;
+      background: radial-gradient(circle, rgba(236, 228, 245, 0.65) 0%, rgba(248, 230, 238, 0.55) 45%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(90px);
+      animation: floatMira2 28s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatMira1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(6%, 8%) scale(1.1); }
+    }
+    @keyframes floatMira2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-8%, -6%) scale(1.15); }
+    }
+
+    #watercolorInkCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.95;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(250, 253, 253, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .sitemap-badge {
+      background: var(--color-accent-terracotta);
+      color: #FFFFFF;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .nav-link-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      font-size: 13px;
+      background: #fff;
+      transition: var(--transition-fluid);
+    }
+    .nav-link-btn:hover {
+      background: var(--color-text-main);
+      color: #fff;
+    }
+
+    /* Hero */
+    .sitemap-hero {
+      position: relative;
+      z-index: 1;
+      padding: 70px 24px 40px 24px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .sitemap-hero-tag {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .sitemap-title {
+      font-family: var(--font-serif);
+      font-size: 42px;
+      font-weight: 400;
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+
+    .sitemap-desc {
+      font-size: 15px;
+      color: var(--color-text-sub);
+      font-weight: 300;
+      margin-bottom: 35px;
+      line-height: 1.8;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 45px;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border: 1px solid var(--color-border);
+      border-radius: 30px;
+      font-size: 13px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      transition: var(--transition-fluid);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--color-text-main);
+      color: #FFFFFF;
+      border-color: var(--color-text-main);
+    }
+
+    /* Sitemap Grid */
+    .sitemap-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .sitemap-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 22px;
+    }
+
+    .depth1-card {
+      background: var(--color-bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 24px 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+      transition: var(--transition-fluid);
+      display: flex;
+      flex-direction: column;
+    }
+    .depth1-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.06);
+    }
+
+    .depth1-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .depth1-code {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-accent-terracotta);
+      letter-spacing: 1px;
+    }
+
+    .depth1-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      margin-top: 4px;
+    }
+
+    .depth2-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .depth2-item {
+      padding: 12px 12px;
+      background: #FAF7F2;
+      border: 1px solid rgba(230, 225, 218, 0.8);
+      border-radius: 6px;
+      transition: var(--transition-fluid);
+    }
+    .depth2-item:hover {
+      background: #FFFFFF;
+      border-color: var(--color-text-main);
+    }
+
+    .depth2-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .depth2-code {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--color-accent-sage);
+      color: #FFFFFF;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .depth2-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-main);
+    }
+
+    .depth2-desc {
+      font-size: 11px;
+      color: var(--color-text-sub);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+
+    .depth3-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .depth3-tag {
+      font-size: 9px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--color-border);
+      padding: 1px 5px;
+      border-radius: 6px;
+      color: var(--color-text-muted);
+    }
+
+    /* Modal Legend */
+    .modal-legend-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1440px;
+      margin: 50px auto 0;
+      padding: 0 40px;
+    }
+
+    .legend-box {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 28px 32px;
+    }
+
+    .legend-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .legend-card {
+      background: #FAF7F2;
+      border: 1px solid var(--color-border);
+      padding: 14px;
+      border-radius: 6px;
+    }
+
+    .legend-code {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--color-text-main);
+      color: #FFFFFF;
+      padding: 2px 6px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 70px;
+      padding: 50px 40px;
+      border-top: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 1300px) {
+      .sitemap-grid { grid-template-columns: repeat(3, 1fr); }
+      .legend-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .sitemap-grid { grid-template-columns: repeat(2, 1fr); }
+      .legend-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .sitemap-grid, .legend-grid { grid-template-columns: 1fr; }
+      .sitemap-container, .modal-legend-section { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full Background Watercolor -->
+  <div class="full-background-watercolor">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+  </div>
+
+  <canvas id="watercolorInkCanvas"></canvas>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">Flottelier</a>
+      <div class="header-actions">
+        <span class="sitemap-badge">MASTER SITEMAP v3.0</span>
+        <a href="category.html" class="nav-link-btn">🛍️ 전체 카탈로그</a>
+        <a href="brand.html" class="nav-link-btn">🌿 브랜드 스토리</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="sitemap-hero">
+    <div class="sitemap-hero-tag">Flottelier Official Information Architecture</div>
+    <h1 class="sitemap-title">플로뜰리에 (Flottelier) 브랜드<br>13대 페르소나 마스터 사이트맵</h1>
+    <p class="sitemap-desc">B2C 11인 및 B2B 2인(총 13인 가상 클라이언트)의 핵심 니즈를 완벽하게 반영한 5대 대메뉴, 16개 핵심 화면, 5개 레이어드 모달 시스템의 체계적 정보 구조도입니다.</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCategory('all')">전체 정보 구조 (All 16)</button>
+      <button class="filter-btn" onclick="filterCategory('brand')">01. 브랜드 &amp; 리추얼 (P-01~03)</button>
+      <button class="filter-btn" onclick="filterCategory('shop')">02. 커머스 &amp; 번들 (P-04~07)</button>
+      <button class="filter-btn" onclick="filterCategory('b2b')">03. B2B &amp; 기업특판 (P-08~10)</button>
+      <button class="filter-btn" onclick="filterCategory('media')">04. 팝업 &amp; 웰니스 (P-11~13)</button>
+      <button class="filter-btn" onclick="filterCategory('my')">05. 마이 &amp; 시니어 (P-14~16)</button>
+    </div>
+  </section>
+
+  <!-- Sitemap Grid -->
+  <main class="sitemap-container">
+    <div class="sitemap-grid">
+
+      <!-- Depth 1 Section 1: BRAND & RITUAL -->
+      <div class="depth1-card" data-cat="brand">
+        <div class="depth1-header">
+          <div>
+            <div class="depth1-code">DEPTH 1 : BRAND &amp; RITUAL</div>
+            <h2 class="depth1-title">01. 브랜드 &amp; 리추얼</h2>
+          </div>
+          <span style="font-size: 20px;">🌿</span>
+        </div>
+
+        <ul class="depth2-list">
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">메인 페이지</span>
+              <span class="depth2-code">P-01</span>
+            </div>
+            <p class="depth2-desc">수채화 Canvas 퍼짐 모션, 4차 정련 뱃지, 80% 여백 에디토리얼, 13인 퀵 탭</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">히어로 캔버스</span>
+              <span class="depth3-tag">4차 정련 뱃지</span>
+              <span class="depth3-tag">페르소나 탭</span>
+            </div>
+            <div style="margin-top: 6px;">
+              <a href="index.html" target="_blank" style="font-size: 11px; text-decoration: underline; color: var(--color-accent-terracotta);">👉 index.html 바로가기</a>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">4차 정련 스토리</span>
+              <span class="depth2-code">P-02</span>
+            </div>
+            <p class="depth2-desc">강화 소창 4차 삶음/건조 전통 공정, 4無 안심 검증, 더마테스트 성적서</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">4차 정련 공정</span>
+              <span class="depth3-tag">4無 인증서 (M-02)</span>
+            </div>
+            <div style="margin-top: 6px;">
+              <a href="brand.html" target="_blank" style="font-size: 11px; text-decoration: underline; color: var(--color-accent-terracotta);">👉 brand.html 바로가기</a>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">소창 길들이기 리추얼</span>
+              <span class="depth2-code">P-03</span>
+            </div>
+            <p class="depth2-desc">세탁 1~90회 4단계 엠보싱 타임라인, 세탁 전후 1:1 수축 비교 슬라이더</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">4단계 타임라인</span>
+              <span class="depth3-tag">세탁 PDF 지침</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Depth 1 Section 2: COMMERCE & BUNDLE -->
+      <div class="depth1-card" data-cat="shop">
+        <div class="depth1-header">
+          <div>
+            <div class="depth1-code">DEPTH 1 : COMMERCE &amp; BUNDLE</div>
+            <h2 class="depth1-title">02. 커머스 &amp; 번들</h2>
+          </div>
+          <span style="font-size: 20px;">🛍️</span>
+        </div>
+
+        <ul class="depth2-list">
+          <li class="depth2-item" style="border: 1.5px solid var(--color-accent-sage); cursor: pointer;" onclick="location.href='category.html'">
+            <div class="depth2-top">
+              <span class="depth2-name">전체 상품 카탈로그</span>
+              <span class="depth2-code">P-04</span>
+            </div>
+            <p class="depth2-desc">2/3/4겹 탭, 페르소나 필터, 실시간 자수 프리뷰, 슬라이드 장바구니 드로어</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag" style="background: #1A3B34; color: #fff;">category.html ➔</span>
+              <span class="depth3-tag">겹수 필터</span>
+              <span class="depth3-tag">1초 장바구니</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">상품 상세 페이지</span>
+              <span class="depth2-code">P-05</span>
+            </div>
+            <p class="depth2-desc">500% HD 확대 뷰어, 실시간 Canvas 자수 프리뷰, 낱장/세트 단가 계산기</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">자수 프리뷰 (M-03)</span>
+              <span class="depth3-tag">500% 줌</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">10장 수건 교체 팩</span>
+              <span class="depth2-code">P-06</span>
+            </div>
+            <p class="depth2-desc">올체인지 10장 번들(장당 9,900원), 3배 빠른 건조 실험, 1/3 수납 비교</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">3배 빠른 건조</span>
+              <span class="depth3-tag">1/3 슬림 수납</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">신혼 혼수 &amp; 선물관</span>
+              <span class="depth2-code">P-07</span>
+            </div>
+            <p class="depth2-desc">신혼 15장 풀세트, 부부 이니셜 자수, 소창 보자기 예단, 2곳 분할배송</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">웨딩 자수</span>
+              <span class="depth3-tag">보자기 예단</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Depth 1 Section 3: B2B & ENTERPRISE -->
+      <div class="depth1-card" data-cat="b2b">
+        <div class="depth1-header">
+          <div>
+            <div class="depth1-code">DEPTH 1 : B2B &amp; ENTERPRISE</div>
+            <h2 class="depth1-title">03. B2B &amp; 기업특판</h2>
+          </div>
+          <span style="font-size: 20px;">🏢</span>
+        </div>
+
+        <ul class="depth2-list">
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">스테이 B2B 센터</span>
+              <span class="depth2-code">P-08</span>
+            </div>
+            <p class="depth2-desc">독채/호텔 20~100장 객실 번들, 숙소 로고 자수, 국/영문 리추얼 카드 동봉</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">스테이 어메니티</span>
+              <span class="depth3-tag">숙소 로고 자수</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">기업 ESG 기프트</span>
+              <span class="depth2-code">P-09</span>
+            </div>
+            <p class="depth2-desc">3/5/10만원대 예산별 팩, 엑셀 1초 일괄 배송, 친환경 탄소 절감 리포트</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">엑셀 일괄배송</span>
+              <span class="depth3-tag">ESG 리포트</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">견적 &amp; 세금계산서 센터</span>
+              <span class="depth2-code">P-10</span>
+            </div>
+            <p class="depth2-desc">직인 날인 견적서 PDF 1초 출력, 사업자 세금계산서 원클릭 신청</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">견적서 PDF (M-04)</span>
+              <span class="depth3-tag">세금계산서</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Depth 1 Section 4: EXPERIENCE & MEDIA -->
+      <div class="depth1-card" data-cat="media">
+        <div class="depth1-header">
+          <div>
+            <div class="depth1-code">DEPTH 1 : EXPERIENCE &amp; MEDIA</div>
+            <h2 class="depth1-title">04. 팝업 &amp; 웰니스</h2>
+          </div>
+          <span style="font-size: 20px;">🎟️</span>
+        </div>
+
+        <ul class="depth2-list">
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">성수 팝업스토어 안내</span>
+              <span class="depth2-code">P-11</span>
+            </div>
+            <p class="depth2-desc">"시간을 짓는 공간" 성수 쇼룸, 타임슬롯 사전예약(M-01), 카카오맵 길찾기</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">사전예약 M-01</span>
+              <span class="depth3-tag">성수 쇼룸</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">웰니스 &amp; 매거진</span>
+              <span class="depth2-code">P-12</span>
+            </div>
+            <p class="depth2-desc">1분 세안 호흡 명상 오디오 플레이어, 터치 프리 1초 흡수법, 디렉터 칼럼</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">1분 명상 오디오</span>
+              <span class="depth3-tag">매칭 퀴즈</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">SNS 언박싱 &amp; 리뷰</span>
+              <span class="depth2-code">P-13</span>
+            </div>
+            <p class="depth2-desc">100% 무비닐 패키징 리얼 후기, 세탁 50회+ 포토 후기, 뉴스레터 구독</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">무비닐 언박싱</span>
+              <span class="depth3-tag">리얼 포토 피드</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Depth 1 Section 5: MY & CONCIERGE -->
+      <div class="depth1-card" data-cat="my">
+        <div class="depth1-header">
+          <div>
+            <div class="depth1-code">DEPTH 1 : MY &amp; CONCIERGE</div>
+            <h2 class="depth1-title">05. 마이 &amp; 시니어</h2>
+          </div>
+          <span style="font-size: 20px;">🔁</span>
+        </div>
+
+        <ul class="depth2-list">
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">장바구니 &amp; 1초 결제</span>
+              <span class="depth2-code">P-14</span>
+            </div>
+            <p class="depth2-desc">네이버페이/카카오페이 1초 결제, 친환경 무비닐 배송, 다중 배송지 분할</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">1초 간편결제</span>
+              <span class="depth3-tag">다중 배송</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">정기구독 &amp; 재구매</span>
+              <span class="depth2-code">P-15</span>
+            </div>
+            <p class="depth2-desc">6/12개월 정기배송 설정, 카카오 알림톡 교체 알림, 동일 자수 1-Click 재주문</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">정기배송 구독</span>
+              <span class="depth3-tag">교체주기 알림</span>
+            </div>
+          </li>
+
+          <li class="depth2-item">
+            <div class="depth2-top">
+              <span class="depth2-name">시니어 &amp; 전화 주문관</span>
+              <span class="depth2-code">P-16</span>
+            </div>
+            <p class="depth2-desc">큰 글씨 모드(130%), 1588-0000 간편 전화 주문, 손목 안심 초경량(85g)</p>
+            <div class="depth3-tags">
+              <span class="depth3-tag">큰 글씨 모드</span>
+              <span class="depth3-tag">전화 주문 핫라인</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Legend Section -->
+  <section class="modal-legend-section">
+    <div class="legend-box">
+      <div class="legend-title">
+        <span>💡 5대 레이어드 모달 시스템 (Modal Overlays System)</span>
+      </div>
+
+      <div class="legend-grid">
+        <div class="legend-card">
+          <span class="legend-code">MODAL M-01</span>
+          <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">성수 팝업 1초 사전예약</div>
+          <p style="font-size: 11px; color: var(--color-text-sub);">타임슬롯 선택 후 카카오 알림톡 바코드 발송</p>
+        </div>
+
+        <div class="legend-card">
+          <span class="legend-code">MODAL M-02</span>
+          <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">KC 4無 성적서 200% 확대</div>
+          <p style="font-size: 11px; color: var(--color-text-sub);">KATRI 무형광·무화학 성적서 고화질 뷰어 &amp; PDF</p>
+        </div>
+
+        <div class="legend-card">
+          <span class="legend-code">MODAL M-03</span>
+          <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">실시간 Canvas 자수기</div>
+          <p style="font-size: 11px; color: var(--color-text-sub);">폰트 8종, 골드/세이지 실 색상 실시간 렌더링</p>
+        </div>
+
+        <div class="legend-card">
+          <span class="legend-code">MODAL M-04</span>
+          <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">실시간 견적서 PDF 출력</div>
+          <p style="font-size: 11px; color: var(--color-text-sub);">직인 날인 B2B 공식 견적서 1초 다운로드</p>
+        </div>
+
+        <div class="legend-card">
+          <span class="legend-code">MODAL M-05</span>
+          <div style="font-weight: 700; font-size: 13px; margin-bottom: 2px;">1장 체험팩 100% 환급</div>
+          <p style="font-size: 11px; color: var(--color-text-sub);">3,000원 체험 신청 및 본품 구매 시 환급 쿠폰</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>플로뜰리에 (Flottelier) - Official Brand Master Sitemap v3.0 &copy; 2026. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Slow Watercolor Ink Script -->
+  <script>
+    const canvas = document.getElementById('watercolorInkCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const watercolorColors = ['rgba(168, 215, 218, ', 'rgba(182, 218, 198, ', 'rgba(202, 192, 222, ', 'rgba(235, 198, 210, '];
+    let inkBlooms = [];
+
+    class SlowWatercolorInkDrop {
+      constructor(x, y) {
+        this.x = x; this.y = y;
+        this.baseColor = watercolorColors[Math.floor(Math.random() * watercolorColors.length)];
+        this.radius = 12 + Math.random() * 16;
+        this.maxRadius = 80 + Math.random() * 40;
+        this.expandSpeed = 0.25 + Math.random() * 0.2;
+        this.alpha = 0.4;
+        this.decay = 0.0018 + Math.random() * 0.0012;
+        this.numPoints = 8 + Math.floor(Math.random() * 6);
+        this.pointOffsets = [];
+        for (let i = 0; i < this.numPoints; i++) this.pointOffsets.push(0.8 + Math.random() * 0.4);
+      }
+      draw() {
+        ctx.save(); ctx.beginPath();
+        const angleStep = (Math.PI * 2) / this.numPoints;
+        for (let i = 0; i < this.numPoints; i++) {
+          const angle = i * angleStep;
+          const r = this.radius * this.pointOffsets[i];
+          const px = this.x + Math.cos(angle) * r;
+          const py = this.y + Math.sin(angle) * r;
+          if (i === 0) ctx.moveTo(px, py);
+          else {
+            const prevAngle = (i - 1) * angleStep;
+            ctx.quadraticCurveTo(this.x + Math.cos((angle + prevAngle) / 2) * (r * 1.08), this.y + Math.sin((angle + prevAngle) / 2) * (r * 1.08), px, py);
+          }
+        }
+        ctx.closePath();
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        grad.addColorStop(0, this.baseColor + (this.alpha * 0.6) + ')');
+        grad.addColorStop(0.65, this.baseColor + (this.alpha * 0.3) + ')');
+        grad.addColorStop(1, this.baseColor + '0)');
+        ctx.fillStyle = grad; ctx.fill(); ctx.restore();
+      }
+      update() {
+        if (this.radius < this.maxRadius) this.radius += this.expandSpeed;
+        this.alpha -= this.decay;
+      }
+    }
+
+    let lastMouseX = 0, lastMouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      const dist = Math.sqrt(Math.pow(e.clientX - lastMouseX, 2) + Math.pow(e.clientY - lastMouseY, 2));
+      if (dist > 30) {
+        inkBlooms.push(new SlowWatercolorInkDrop(e.clientX, e.clientY));
+        lastMouseX = e.clientX; lastMouseY = e.clientY;
+      }
+    });
+
+    function animateSlowWatercolorInk() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < inkBlooms.length; i++) {
+        inkBlooms[i].draw(); inkBlooms[i].update();
+        if (inkBlooms[i].alpha <= 0 || inkBlooms[i].radius >= inkBlooms[i].maxRadius) {
+          inkBlooms.splice(i, 1); i--;
+        }
+      }
+      requestAnimationFrame(animateSlowWatercolorInk);
+    }
+    animateSlowWatercolorInk();
+
+    function filterCategory(cat) {
+      const cards = document.querySelectorAll('.depth1-card');
+      const btns = document.querySelectorAll('.filter-btn');
+      
+      btns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      cards.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

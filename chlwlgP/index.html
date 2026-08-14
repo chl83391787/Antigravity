@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플로뜰리에 (Flottelier) - 수채화 잉크 퍼짐 소창 커머스</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. Seamless Organic Watercolor Tokens (Option 1: Slow & Smooth Watercolor Ink)
+       ========================================================================== */
+    :root {
+      --color-text-main: #232527;
+      --color-text-sub: #585D62;
+      --color-text-muted: #8E949A;
+      --color-border: rgba(220, 225, 225, 0.6);
+      
+      --font-serif: 'Noto Serif KR', 'Cormorant Garamond', serif;
+      --font-sans: 'Noto Sans KR', sans-serif;
+      
+      --transition-fluid: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #FAFDFD;
+      color: var(--color-text-main);
+      line-height: 1.8;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 외부 여백 전체 수채화 번짐 레이어 */
+    .full-background-watercolor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .blob-1 {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(215, 240, 242, 0.75) 0%, rgba(230, 245, 238, 0.5) 40%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(80px);
+      animation: floatMira1 24s infinite alternate ease-in-out;
+    }
+
+    .blob-2 {
+      position: absolute;
+      bottom: 10%;
+      right: -10%;
+      width: 65vw;
+      height: 65vw;
+      background: radial-gradient(circle, rgba(236, 228, 245, 0.65) 0%, rgba(248, 230, 238, 0.55) 45%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(90px);
+      animation: floatMira2 28s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatMira1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(6%, 8%) scale(1.1); }
+    }
+    @keyframes floatMira2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-8%, -6%) scale(1.15); }
+    }
+
+    /* Slow & Smooth Watercolor Ink Canvas */
+    #watercolorInkCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.95;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(250, 253, 253, 0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 22px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--color-text-main);
+    }
+
+    .gnb {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .gnb a {
+      font-size: 14px;
+      letter-spacing: 1px;
+      color: var(--color-text-sub);
+      transition: var(--transition-fluid);
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .gnb a:hover, .gnb a.active {
+      color: var(--color-text-main);
+    }
+
+    .gnb a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--color-text-main);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--color-text-sub);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 140px 24px 80px 24px;
+      background: transparent;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 840px;
+    }
+
+    .hero-category-tag {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--color-text-muted);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 54px;
+      font-weight: 400;
+      line-height: 1.35;
+      letter-spacing: -1px;
+      color: var(--color-text-main);
+      margin-bottom: 28px;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      color: var(--color-text-sub);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 48px;
+      word-break: keep-all;
+    }
+
+    .btn-hero-primary {
+      display: inline-block;
+      padding: 16px 44px;
+      background: var(--color-text-main);
+      color: #FFFFFF;
+      font-size: 14px;
+      letter-spacing: 1px;
+      border-radius: 40px;
+      transition: var(--transition-fluid);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    .btn-hero-primary:hover {
+      background: #404448;
+      transform: translateY(-2px);
+    }
+
+    /* Editorial Section */
+    .section-editorial {
+      position: relative;
+      z-index: 1;
+      padding: 120px 40px 160px 40px;
+      max-width: 1360px;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .editorial-header {
+      margin-bottom: 80px;
+      max-width: 600px;
+    }
+
+    .editorial-title {
+      font-family: var(--font-serif);
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 20px;
+    }
+
+    .shiroito-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    .shiroito-card-main {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 60px;
+      border-radius: 6px;
+      border: 1px solid var(--color-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    }
+
+    .shiroito-card-main .card-tag {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--color-text-muted);
+      margin-bottom: 16px;
+    }
+
+    .shiroito-card-main h3 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .shiroito-card-main p {
+      font-size: 15px;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .clean-image-container {
+      height: 240px;
+      background: #FAF9F6;
+      border: 1px solid #EFECE6;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-sub);
+      font-family: var(--font-serif);
+      font-size: 15px;
+    }
+
+    .octaevo-card-sub {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      margin-top: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    }
+
+    .octaevo-card-sub h4 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .octaevo-card-sub p {
+      font-size: 14px;
+      color: var(--color-text-sub);
+    }
+
+    /* Commerce Section */
+    .section-commerce {
+      position: relative;
+      z-index: 1;
+      padding: 100px 40px 160px 40px;
+      background: transparent;
+    }
+
+    .commerce-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+
+    .commerce-title-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .commerce-title {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      font-weight: 400;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--color-border);
+      padding: 32px;
+      border-radius: 6px;
+      transition: var(--transition-fluid);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    }
+
+    .product-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      transform: translateY(-4px);
+    }
+
+    .product-visual-box {
+      height: 260px;
+      background: #FAF9F6;
+      border: 1px solid #EFECE6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      border-radius: 4px;
+      color: var(--color-text-sub);
+      font-family: var(--font-serif);
+      font-size: 15px;
+    }
+
+    .product-name {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 13px;
+      color: var(--color-text-sub);
+      margin-bottom: 16px;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-cart {
+      padding: 8px 18px;
+      border: 1px solid var(--color-border);
+      font-size: 12px;
+      background: #FFFFFF;
+      transition: var(--transition-fluid);
+      border-radius: 20px;
+    }
+
+    .btn-cart:hover {
+      background: var(--color-text-main);
+      color: #FFFFFF;
+    }
+
+    /* Footer */
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 80px 40px;
+      border-top: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--color-text-main);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full Background Watercolor -->
+  <div class="full-background-watercolor">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+  </div>
+
+  <!-- Slow & Smooth Watercolor Ink Canvas -->
+  <canvas id="watercolorInkCanvas"></canvas>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">Flottelier</a>
+      <ul class="gnb">
+        <li><a href="index.html" class="active">HOME</a></li>
+        <li><a href="brand.html">BRAND STORY</a></li>
+        <li><a href="category.html">COLLECTION (카탈로그)</a></li>
+        <li><a href="#about">SHIROITO FRAME</a></li>
+        <li><a href="사이트맵.html">SITEMAP</a></li>
+      </ul>
+      <div class="header-actions">
+        <a href="category.html">SEARCH</a>
+        <a href="category.html">SHOP (카탈로그)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-category-tag">Slow & Smooth Watercolor Ink Splash</div>
+      <h1 class="hero-title">부드럽고 아주 천천히 번지는<br>고요한 수채화 잉크의 순간</h1>
+      <p class="hero-description">마우스를 천천히 움직여 보세요. 커서의 동선을 따라 맑은 아쿠아, 민트, 라벤더, 로즈 수채화 잉크가 아주 부드럽고 여유롭게 피어나 은은하게 스며듭니다.</p>
+      <a href="category.html" class="btn-hero-primary">전체 컬렉션 탐색하기 &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Editorial Section -->
+  <section class="section-editorial" id="about">
+    <div class="editorial-header">
+      <div class="hero-category-tag">Reference Collection : SHIROITO & DECENCIA</div>
+      <h2 class="editorial-title">여백과 비율이 만드는<br>편집 디자인 스타일 프레임</h2>
+    </div>
+
+    <div class="shiroito-grid">
+      <div class="shiroito-card-main" id="shiroito">
+        <div class="card-tag">SHIROITO LAYOUT</div>
+        <h3>소재와 원단을 하나의 작품처럼 연출하는 여백</h3>
+        <p>사진을 규칙적인 카드로 나열하지 않고 80% 이상의 넉넉한 여백과 비대칭 배치를 활용하여 제품과 소재 사진에 고요한 집중도를 부여합니다.</p>
+        
+        <div class="clean-image-container">
+          [SHIROITO 순수 소창 오가닉 원단 프레임]
+        </div>
+      </div>
+
+      <div>
+        <div class="octaevo-card-sub">
+          <div class="card-tag">DECENCIA STRUCTURE</div>
+          <h4>정돈된 글자와 사진의 대치</h4>
+          <p>콘텐츠마다 프레임 크기와 위치를 다르게 부여하여 화면 전체 여백에 은은한 리듬감을 더합니다.</p>
+        </div>
+
+        <div class="octaevo-card-sub">
+          <div class="card-tag">OCTAEVO GRID</div>
+          <h4>리듬감 있는 프레임 변형</h4>
+          <p>일관된 쇼핑몰 카드의 단조로움을 탈피하고 잡지 페이지를 넘기는 듯한 에디토리얼 경험을 선사합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commerce Section -->
+  <section class="section-commerce" id="shop">
+    <div class="commerce-inner">
+      <div class="commerce-title-area">
+        <div>
+          <div class="hero-category-tag">Reference Collection : Diptyque</div>
+          <h2 class="commerce-title">스토리와 결합된 상품 라인업</h2>
+        </div>
+        <a href="#" style="font-size: 14px; text-decoration: underline;">전체보기 &rarr;</a>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-visual-box">
+            소창 2겹 세안 타월
+          </div>
+          <h3 class="product-name">4차 정련 2겹 세안 타월</h3>
+          <p class="product-desc">맑고 부드러운 순수 오가닉 가제 소창 타월</p>
+          <div class="product-price">
+            <span>15,000원</span>
+            <button class="btn-cart">담기</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-visual-box">
+            소창 3겹 데일리 타월
+          </div>
+          <h3 class="product-name">소창 3겹 데일리 타월</h3>
+          <p class="product-desc">자연스러운 흡수력과 부드러운 감촉</p>
+          <div class="product-price">
+            <span>18,000원</span>
+            <button class="btn-cart">담기</button>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-visual-box">
+            소창 4겹 바스 타월
+          </div>
+          <h3 class="product-name">소창 4겹 바스 타월</h3>
+          <p class="product-desc">샤워 후 전신을 감싸주는 포근한 수건</p>
+          <div class="product-price">
+            <span>32,000원</span>
+            <button class="btn-cart">담기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Flottelier</div>
+        <p>Original References: mira, JIII ATELIER, SHIROITO, DECENCIA, OCTAEVO, Izanami, NUSET, mud Inc., Diptyque</p>
+      </div>
+      <div>
+        <p>&copy; 2026 Flottelier. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slow & Smooth Watercolor Ink Bloom Physics Engine -->
+  <script>
+    const canvas = document.getElementById('watercolorInkCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const watercolorColors = [
+      'rgba(168, 215, 218, ', // Light Aqua
+      'rgba(182, 218, 198, ', // Soft Mint
+      'rgba(202, 192, 222, ', // Pale Lavender
+      'rgba(235, 198, 210, '  // Soft Rose
+    ];
+
+    let inkBlooms = [];
+
+    class SlowWatercolorInkDrop {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.baseColor = watercolorColors[Math.floor(Math.random() * watercolorColors.length)];
+        this.radius = 12 + Math.random() * 16;
+        this.maxRadius = 90 + Math.random() * 50;
+        
+        // 속도 감속: 아주 천천히 피어나도록 조율 (Slow & Gentle Expansion)
+        this.expandSpeed = 0.25 + Math.random() * 0.2;
+        this.alpha = 0.45;
+        // 서서히 없어지는 속도 감속: 여유롭고 부드럽게 사그라짐
+        this.decay = 0.0018 + Math.random() * 0.0012;
+        
+        this.numPoints = 8 + Math.floor(Math.random() * 6);
+        this.pointOffsets = [];
+        for (let i = 0; i < this.numPoints; i++) {
+          this.pointOffsets.push(0.8 + Math.random() * 0.4);
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+
+        const angleStep = (Math.PI * 2) / this.numPoints;
+        for (let i = 0; i < this.numPoints; i++) {
+          const angle = i * angleStep;
+          const r = this.radius * this.pointOffsets[i];
+          const px = this.x + Math.cos(angle) * r;
+          const py = this.y + Math.sin(angle) * r;
+
+          if (i === 0) ctx.moveTo(px, py);
+          else {
+            const prevAngle = (i - 1) * angleStep;
+            const cx = this.x + Math.cos((angle + prevAngle) / 2) * (r * 1.08);
+            const cy = this.y + Math.sin((angle + prevAngle) / 2) * (r * 1.08);
+            ctx.quadraticCurveTo(cx, cy, px, py);
+          }
+        }
+        ctx.closePath();
+
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        grad.addColorStop(0, this.baseColor + (this.alpha * 0.6) + ')');
+        grad.addColorStop(0.65, this.baseColor + (this.alpha * 0.3) + ')');
+        grad.addColorStop(1, this.baseColor + '0)');
+
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      update() {
+        if (this.radius < this.maxRadius) {
+          this.radius += this.expandSpeed;
+        }
+        this.alpha -= this.decay;
+      }
+    }
+
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    // 마우스 이동 간격을 넓혀 잉크 방울이 산만하지 않고 우아하게 생성되도록 설정
+    window.addEventListener('mousemove', (e) => {
+      const dx = e.clientX - lastMouseX;
+      const dy = e.clientY - lastMouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > 28) {
+        inkBlooms.push(new SlowWatercolorInkDrop(e.clientX, e.clientY));
+        lastMouseX = e.clientX;
+        lastY = e.clientY;
+      }
+    });
+
+    function animateSlowWatercolorInk() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < inkBlooms.length; i++) {
+        inkBlooms[i].draw();
+        inkBlooms[i].update();
+        if (inkBlooms[i].alpha <= 0 || inkBlooms[i].radius >= inkBlooms[i].maxRadius) {
+          inkBlooms.splice(i, 1);
+          i--;
+        }
+      }
+
+      requestAnimationFrame(animateSlowWatercolorInk);
+    }
+
+    animateSlowWatercolorInk();
+  </script>
+</body>
+</html>

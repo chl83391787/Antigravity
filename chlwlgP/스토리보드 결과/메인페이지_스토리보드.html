@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플로뜰리에 (Flottelier) - 메인페이지 스토리보드 &amp; 접근성 표준 와이어프레임</title>
+  <style>
+    /* CSS Reset & CSS Variables */
+    :root {
+      --bg-main: #f4f6f5;
+      --bg-card: #ffffff;
+      --bg-gray-light: #e9eeea;
+      --bg-gray-mid: #d2ded7;
+      --bg-gray-dark: #3a453f;
+      --border-gray: #c5d1c9;
+      --border-dark: #5c6961;
+      --text-main: #1f2723;
+      --text-muted: #5e6b63;
+      --text-light: #ffffff;
+      --accent-sage: #6b8a78;
+      --accent-gold: #b59533;
+      --focus-ring: #2e6945;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Accessibility Focus Ring Standards */
+    a:focus-visible, button:focus-visible, input:focus-visible, [tabindex="0"]:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Skip Navigation (Web Accessibility Rule 8.2) */
+    .skip-nav {
+      position: absolute;
+      top: -100px;
+      left: 10px;
+      background: var(--bg-gray-dark);
+      color: #fff;
+      padding: 12px 20px;
+      z-index: 10000;
+      font-weight: 700;
+      border-radius: 4px;
+      transition: top 0.2s ease;
+    }
+    .skip-nav:focus {
+      top: 10px;
+    }
+
+    /* Screen Reader Only Helper Class (WCAG 2.1) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Storyboard Header Bar (Meta Info) */
+    .sb-meta-bar {
+      background-color: var(--bg-gray-dark);
+      color: var(--text-light);
+      padding: 16px 0;
+      border-bottom: 3px solid var(--accent-sage);
+    }
+    .sb-meta-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .sb-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .sb-tag {
+      background-color: var(--accent-sage);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Wireframe Section Wrapper */
+    .wf-section {
+      background-color: var(--bg-card);
+      border: 2px dashed var(--border-gray);
+      border-radius: 8px;
+      margin: 30px 0;
+      padding: 24px;
+      position: relative;
+    }
+    .wf-section-label {
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      background-color: var(--bg-gray-dark);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Top Banner (P-01-01) */
+    .top-banner {
+      background-color: var(--bg-gray-mid);
+      border: 1px solid var(--border-gray);
+      text-align: center;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* Header Bar (P-01-01) */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      padding: 16px 24px;
+      border-radius: 4px;
+    }
+    .logo-box {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      background-color: var(--bg-gray-mid);
+      padding: 8px 16px;
+      border: 1px solid var(--border-gray);
+      border-radius: 4px;
+    }
+    .gnb-menu {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    .gnb-item {
+      font-size: 0.95rem;
+      font-weight: 700;
+      background-color: var(--bg-card);
+      padding: 6px 14px;
+      border: 1px solid var(--border-gray);
+      border-radius: 4px;
+    }
+    .header-quick-menu {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-wireframe {
+      background-color: var(--bg-gray-mid);
+      border: 1px solid var(--border-dark);
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    /* Hero Section (P-01-02) */
+    .hero-box {
+      background-color: var(--bg-gray-light);
+      border: 2px solid var(--border-gray);
+      border-radius: 6px;
+      padding: 60px 30px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-media-placeholder {
+      background-color: var(--bg-gray-mid);
+      border: 1px dashed var(--border-dark);
+      padding: 15px;
+      margin-bottom: 25px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 4px;
+    }
+    .hero-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 15px;
+      color: var(--text-main);
+    }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .btn-primary-wf {
+      background-color: var(--bg-gray-dark);
+      color: #fff;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border: 1px solid var(--bg-gray-dark);
+    }
+    .btn-secondary-wf {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border: 2px solid var(--border-dark);
+    }
+
+    /* Section Title Standard */
+    .sec-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .sec-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .sec-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Accessibility Section Card (Section 8 Highlight) */
+    .a11y-spec-box {
+      background-color: #f1f5f2;
+      border: 2px solid var(--accent-sage);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .a11y-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .a11y-card {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      padding: 16px;
+      border-radius: 6px;
+    }
+    .a11y-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--bg-gray-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Trust Badges (P-01-03) */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .badge-card {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      border-radius: 6px;
+      padding: 20px 15px;
+      text-align: center;
+    }
+    .badge-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      background-color: var(--bg-gray-mid);
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+    }
+    .badge-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .badge-detail {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Ritual Timeline (P-01-04) */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .timeline-card {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      border-radius: 6px;
+      padding: 20px 15px;
+      text-align: center;
+    }
+    .step-tag {
+      background-color: var(--bg-gray-dark);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .step-img-box {
+      background-color: var(--bg-gray-mid);
+      border: 1px dashed var(--border-dark);
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+
+    /* Collection Showcase (P-01-05) */
+    .tab-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .tab-btn {
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 1px solid var(--border-gray);
+      background-color: var(--bg-gray-light);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background-color: var(--bg-gray-dark);
+      color: #fff;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .product-card {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      border-radius: 6px;
+      padding: 16px;
+    }
+    .product-img-box {
+      background-color: var(--bg-gray-mid);
+      border: 1px dashed var(--border-dark);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      border-radius: 4px;
+    }
+    .product-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .product-price {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .event-banner-box {
+      background-color: var(--bg-gray-mid);
+      border: 2px solid var(--border-dark);
+      padding: 18px 24px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Pop-up Store (P-01-06) */
+    .popup-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+    .map-box {
+      background-color: var(--bg-gray-mid);
+      border: 2px dashed var(--border-dark);
+      height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 6px;
+    }
+    .popup-info-box {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      padding: 24px;
+      border-radius: 6px;
+    }
+
+    /* Editorial & Lookbook (P-01-07) */
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .lookbook-card {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      border-radius: 6px;
+      padding: 16px;
+      position: relative;
+    }
+    .lookbook-img-box {
+      background-color: var(--bg-gray-mid);
+      border: 1px dashed var(--border-dark);
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      position: relative;
+      border-radius: 4px;
+    }
+    .tag-pin {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      background-color: var(--bg-gray-dark);
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      border: 2px solid #fff;
+    }
+
+    /* SNS & Newsletter (P-01-08) */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .insta-box {
+      background-color: var(--bg-gray-mid);
+      border: 1px dashed var(--border-dark);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    .newsletter-box {
+      background-color: var(--bg-gray-light);
+      border: 1px solid var(--border-gray);
+      padding: 24px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+      max-width: 500px;
+      margin: 15px auto 0;
+    }
+    .input-wf {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border-dark);
+      background-color: #fff;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* Footer (P-01-09) */
+    .footer-box {
+      background-color: var(--bg-gray-dark);
+      color: var(--text-light);
+      padding: 36px 24px;
+      border-radius: 6px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-dark);
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+      font-size: 0.85rem;
+    }
+
+    /* Pure CSS Modals (M-01 & M-02) */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay:target {
+      display: flex;
+    }
+    .modal-card {
+      background: #fff;
+      border: 2px solid var(--border-dark);
+      border-radius: 8px;
+      max-width: 550px;
+      width: 90%;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Rules */
+    @media (max-width: 768px) {
+      .badge-grid, .timeline-grid, .product-grid, .a11y-grid {
+        grid-template-columns: 1fr;
+      }
+      .popup-split, .lookbook-grid {
+        grid-template-columns: 1fr;
+      }
+      .insta-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .gnb-menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Navigation for Web Accessibility Standard (WCAG 2.1) -->
+  <a href="#main-content" class="skip-nav">본문 영역 바로가기 (Skip to Main Content)</a>
+
+  <!-- Top Storyboard Meta Header -->
+  <header class="sb-meta-bar" role="banner">
+    <div class="container sb-meta-content">
+      <div class="sb-title">
+        플로뜰리에 (Flottelier) 메인페이지 스토리보드 &amp; 접근성 명세
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <span class="sb-tag">WCAG 2.1 AA</span>
+        <span class="sb-tag">WAI-ARIA</span>
+        <span class="sb-tag">KWCAG 2.2</span>
+        <span class="sb-tag">JS 제외 HTML/CSS</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="main-content" role="main" style="margin-top: 30px;">
+
+    <!-- SECTION 8: ACCESSIBILITY REQUIREMENTS SUMMARY CARD -->
+    <div class="a11y-spec-box" aria-labelledby="a11y-sec-title">
+      <div class="wf-section-label" style="top: -12px;">8. 접근성 요구사항 (Web Accessibility Specifications)</div>
+      <h2 id="a11y-sec-title" style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
+        ♿ 8. 웹 접근성 요구사항 (12대 표준 명세)
+      </h2>
+      
+      <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; background: #fff; border: 1px solid var(--border-gray);">
+        <thead>
+          <tr style="background-color: var(--bg-gray-mid); color: var(--text-main); text-align: left;">
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">항목</th>
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">요구사항</th>
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">적용 영역</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">구조</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);"><code>header/nav/main/section/footer</code> 랜드마크와 H1/H2 제목 계층 구조화</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">전체</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">바로가기</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">첫 포커스 요소로 본문으로 바로가기 (Skip Navigation) 제공</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">헤더</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">대체 콘텐츠</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">정보 이미지/차트에 대체 텍스트/텍스트 요약 제공; 장식 이미지는 빈 <code>alt=""</code></td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">히어로, 통계, 제품, AI, 인포그래픽, 지도, 후기</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">키보드</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">GNB, 메뉴, 카드, 슬라이더, 탭, 아코디언, CTA를 키보드만으로 사용 가능</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">전체 인터랙션</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">포커스</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">배경과 명확히 구분되는 포커스 표시; Sticky UI가 포커스를 가리지 않음</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">전체</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">명도 대비</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">일반 텍스트 4.5:1 이상, 큰 텍스트/UI 경계 3:1 이상 목표 준수</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">전체</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">비색상 정보</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">자세/점수/상태를 색상 외에 숫자, 아이콘, 문구와 함께 전달</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">AI, 오류/완료 상태</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">모션</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">자동 재생 최소화; 정지 제어 기능 제공; <code>prefers-reduced-motion</code> 대응</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">히어로, 수치, 게이지, 인포그래픽</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">터치</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">모바일 조작 영역 최소 44x44px 이상, 요소 간 충분한 간격 보장</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">헤더, 카드, CTA, 아코디언</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">오류</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">오류 문구와 입력을 프로그램적으로 연결; 오류 요약 후 첫 오류 항목으로 포커스 이동</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">검색, 신청/예약 연결 화면</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">확대재배치</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">200% 확대 및 320px CSS 폭에서도 정보 및 기능 손실 없이 리플로우 보장</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">전체</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">동적 상태</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">중요한 변경은 적절한 라이브 영역(<code>aria-live</code>)으로 알리고 불필요한 반복 알림 금지</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">AI, 센터 검색, 신청 상태</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 9: ASSUMPTIONS & TO-BE-CONFIRMED SUMMARY CARD -->
+    <div class="a11y-spec-box" style="background-color: #fff9e6; border-color: #f0c040;">
+      <div class="wf-section-label" style="top: -12px; background-color: #8c6d00;">9. 가정 및 확인 필요 사항</div>
+      <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
+        📋 9. 가정 및 확인 필요 사항 (Assumptions &amp; To-Be-Confirmed Items)
+      </h2>
+      
+      <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85rem; background: #fff; border: 1px solid var(--border-gray);">
+        <thead>
+          <tr style="background-color: #ffe899; color: var(--text-main); text-align: left;">
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">구분</th>
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">항목</th>
+            <th style="padding: 8px 12px; border: 1px solid var(--border-gray);">처리 원칙</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #8c6d00;">가정</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">로그인/마이페이지와 비회원의 원래 목적지 복귀</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">사이트맵의 최소 보완 구조로만 사용; 실제 인증 정책 확정 필요</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #8c6d00;">가정</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">반응형 분기점 1280/768/360px</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">디자인/개발 환경에서 콘텐츠 기준으로 재검증</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #8c6d00;">가정</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">메가 메뉴, 모바일 푸터 아코디언, Sticky CTA 닫기/기억</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">사용자 테스트 후 채택 여부 결정</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">통계 3종의 원출처/조사 시점/표본</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">공개 전 출처와 각주 확보</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">제품 색상, 실제 이미지, 상세 규격, 세탁 조건</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">제품/브랜드 가이드 수급 후 반영</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">AI 점수 산식, 센서 연결 방식, 데모 수치</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">실제 제품/앱 정책과 연동 명세 필요</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">제휴 센터명, 주소, 운영시간, 예약 가능 시간</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">운영 DB/API 확정 후 연결</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">후기 원문, 인물 동의, 실명/직장명 사용 범위</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">검증된 후기와 초상권/개인정보 동의 필요</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">회사 정보, 고객센터, 이용약관, 개인정보처리방침</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">푸터 공개 전 필수 정보 확정</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">치료/교정 등 의료적 효능 표현 허용 범위</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray);">법무/규제 검토 후 카피 확정</td>
+          </tr>
+          <tr style="background-color: #fff0f0;">
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold; color: #c0392b;">확인 필요</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">30일 무료 체험 및 무료 시착의 자격/비용/반품마감 조건</td>
+            <td style="padding: 8px 12px; border: 1px solid var(--border-gray); font-weight: bold;">운영법무 정책 확정 후 CTA 주변에 명시</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- SECTION P-01-01: Header & Top Banner -->
+    <section class="wf-section" aria-labelledby="sec-p01-01-title">
+      <div class="wf-section-label">P-01-01: 헤더 &amp; GNB 내비게이션 영역</div>
+      
+      <!-- Top Notification Banner -->
+      <div class="top-banner" role="region" aria-label="국가 공인 KC 인증 공지 띠배너">
+        🌿 국가 공인 KC 인증 100% 무형광 성적서 원문 보기 [클릭 시 M-02 모달 열림]
+        <a href="#modal-m02" class="btn-wireframe" style="margin-left: 10px;" aria-haspopup="dialog">성적서 원문 (M-02)</a>
+      </div>
+
+      <!-- Main Navigation Header -->
+      <div class="header-bar" role="navigation" aria-label="플로뜰리에 주 내비게이션 메뉴">
+        <div class="logo-box" tabindex="0" aria-label="플로뜰리에 로고 (홈으로 이동)">FLOTTELIER</div>
+        <ul class="gnb-menu" role="menubar">
+          <li class="gnb-item" role="menuitem" tabindex="0">ABOUT</li>
+          <li class="gnb-item" role="menuitem" tabindex="0">RITUAL</li>
+          <li class="gnb-item" role="menuitem" tabindex="0">SHOP</li>
+          <li class="gnb-item" role="menuitem" tabindex="0">EDITORIAL</li>
+          <li class="gnb-item" role="menuitem" tabindex="0">POP-UP</li>
+          <li class="gnb-item" role="menuitem" tabindex="0">GIFT</li>
+        </ul>
+        <div class="header-quick-menu">
+          <button type="button" class="btn-wireframe" aria-label="통합 검색창 열기">🔍 검색</button>
+          <button type="button" class="btn-wireframe" aria-label="1초 재구매 센터 바로가기">🔁 재구매</button>
+          <button type="button" class="btn-wireframe" aria-label="마이페이지 이동">👤 마이</button>
+          <button type="button" class="btn-wireframe" aria-label="장바구니 0개 담김">🛒 (0)</button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-02: Hero Section -->
+    <section class="wf-section" aria-labelledby="hero-title-id">
+      <div class="wf-section-label">P-01-02: 히어로 메인 비주얼 &amp; 브랜드 선언문</div>
+      
+      <div class="hero-box">
+        <div class="hero-media-placeholder" role="img" aria-label="맑은 물 속에서 부드럽게 흩날리는 무형광 소창 원단 비주얼 모션">
+          [HD FLUID WATER &amp; COTTON MOTION VIDEO PLACEHOLDER]
+          <br>
+          (맑은 물 속에서 부드럽게 흩날리는 무형광 소창 원단 비주얼 모션)
+        </div>
+        <h1 class="hero-title" id="hero-title-id">"물건을 사용하는 시간이 나를 돌보는 의식이 된다."</h1>
+        <p class="hero-subtitle">받아서 바로 사용하는 4차 정련 완료 100% 보장 소창 타월</p>
+        
+        <div class="btn-group">
+          <a href="#section-p01-03" class="btn-primary-wf">🌿 4차 정련 탐색하기</a>
+          <a href="#section-p01-05" class="btn-secondary-wf">🎁 1장 체험팩 신청 (100% 환급)</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-03: Trust Badges -->
+    <section class="wf-section" id="section-p01-03" aria-labelledby="sec-p01-03-title">
+      <div class="wf-section-label">P-01-03: 품질 &amp; 4無 안전성 인증 보증 뱃지</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-03-title">안심과 신뢰의 약속</h2>
+        <p class="sec-desc">화학 물질 걱정 없이 온 가족이 바로 사용할 수 있는 4대 안전성 검증 기준</p>
+      </div>
+
+      <div class="badge-grid" role="list">
+        <div class="badge-card" role="listitem" tabindex="0">
+          <div class="badge-icon" aria-hidden="true">🛁</div>
+          <div class="badge-name">4차 정련 완료</div>
+          <div class="badge-detail">별도 삶음 필요 없이 받아서 즉시 사용 가능</div>
+        </div>
+        <div class="badge-card" role="listitem" tabindex="0">
+          <div class="badge-icon" aria-hidden="true">🛡️</div>
+          <div class="badge-name">국가 공인 KC 인증</div>
+          <div class="badge-detail">영유아 사용 안전 기준 100% 통과</div>
+        </div>
+        <div class="badge-card" role="listitem" tabindex="0">
+          <div class="badge-icon" aria-hidden="true">🌿</div>
+          <div class="badge-name">4無 안심 검증</div>
+          <div class="badge-detail">무형광 · 무표백 · 무염색 · 무향료 불검출</div>
+        </div>
+        <div class="badge-card" role="listitem" tabindex="0">
+          <div class="badge-icon" aria-hidden="true">🇰🇷</div>
+          <div class="badge-name">100% 국산 제조</div>
+          <div class="badge-detail">강화 소창 원단 전통 직조 방식 계승</div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="#modal-m02" class="btn-wireframe" style="padding: 10px 20px; font-size: 0.95rem;" aria-haspopup="dialog">📄 인증 성적서 원문 확인 모달 (M-02)</a>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-04: Ritual Timeline Preview -->
+    <section class="wf-section" aria-labelledby="sec-p01-04-title">
+      <div class="wf-section-label">P-01-04: 소창 리추얼 길들이기 4단계 미리보기</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-04-title">시간과 손길이 만드는 리추얼</h2>
+        <p class="sec-desc">세탁할수록 하얗고 부드러워지는 소창 특유의 4단계 변화 과정</p>
+      </div>
+
+      <div class="timeline-grid" role="list">
+        <div class="timeline-card" role="listitem" tabindex="0">
+          <span class="step-tag">Step 1: 첫 만남</span>
+          <div class="step-img-box" role="img" alt="1단계 첫만남 원단 확대 이미지">[원단 확대 컷 1]</div>
+          <div style="font-weight: 700; margin-bottom: 4px;">짱짱한 첫 원단</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">볏짚 빛깔 내구성 100%</div>
+        </div>
+
+        <div class="timeline-card" role="listitem" tabindex="0">
+          <span class="step-tag">Step 2: 10회 세탁</span>
+          <div class="step-img-box" role="img" alt="2단계 10회 세탁 후 원단 확대 이미지">[원단 확대 컷 2]</div>
+          <div style="font-weight: 700; margin-bottom: 4px;">뽀송한 길들이기</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">풀기가 빠지고 은은함 시작</div>
+        </div>
+
+        <div class="timeline-card" role="listitem" tabindex="0">
+          <span class="step-tag">Step 3: 30회 세탁</span>
+          <div class="step-img-box" role="img" alt="3단계 30회 세탁 후 원단 확대 이미지">[원단 확대 컷 3]</div>
+          <div style="font-weight: 700; margin-bottom: 4px;">최상의 흡수력</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">가제 특유의 부드러움 극대화</div>
+        </div>
+
+        <div class="timeline-card" role="listitem" tabindex="0">
+          <span class="step-tag">Step 4: 50회+ 사용</span>
+          <div class="step-img-box" role="img" alt="4단계 50회 이상 사용 후 완성된 인생 수건 이미지">[원단 확대 컷 4]</div>
+          <div style="font-weight: 700; margin-bottom: 4px;">나만의 인생 수건</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">손때 묻은 완벽한 리추얼 수건</div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button type="button" class="btn-wireframe" style="padding: 10px 20px;" aria-label="소창 길들이기 및 세탁 가이드 PDF 지침서 다운로드">📥 소창 길들이기 &amp; 세탁 가이드 PDF 다운로드</button>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-05: Product Showcase -->
+    <section class="wf-section" id="section-p01-05" aria-labelledby="sec-p01-05-title">
+      <div class="wf-section-label">P-01-05: 대표 소창 컬렉션 카탈로그</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-05-title">플로뜰리에 대표 컬렉션</h2>
+        <p class="sec-desc">용도와 겹수별로 만나는 오가닉 소창 라인업</p>
+      </div>
+
+      <div class="tab-bar" role="tablist" aria-label="컬렉션 라인업 필터">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true">전체보기</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false">3겹 데일리</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false">2겹 안심가제</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false">무라벨 와입스</button>
+      </div>
+
+      <div class="product-grid" role="list">
+        <div class="product-card" role="listitem">
+          <div class="product-img-box" role="img" alt="3겹 데일리 소창 타월 제품 대표 이미지">[PRODUCT 1 IMAGE PLACEHOLDER]</div>
+          <div class="product-title">3겹 데일리 소창 타월</div>
+          <div class="product-price">18,000원 (세트) <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">(장당 4,500원~)</span></div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-wireframe" style="flex: 1; justify-content: center;" aria-label="3겹 데일리 소창 타월 상세페이지 보기">상세보기</button>
+            <button type="button" class="btn-wireframe" aria-label="3겹 데일리 소창 타월 장바구니 담기">🛒</button>
+          </div>
+        </div>
+
+        <div class="product-card" role="listitem">
+          <div class="product-img-box" role="img" alt="2겹 안심 가제 아기 수건 대표 이미지">[PRODUCT 2 IMAGE PLACEHOLDER]</div>
+          <div class="product-title">2겹 안심 가제 아기 수건</div>
+          <div class="product-price">14,000원 (세트) <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">(맘리뷰 4.9 ⭐)</span></div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-wireframe" style="flex: 1; justify-content: center;" aria-label="2겹 안심 가제 아기 수건 상세페이지 보기">상세보기</button>
+            <button type="button" class="btn-wireframe" aria-label="2겹 안심 가제 아기 수건 장바구니 담기">🛒</button>
+          </div>
+        </div>
+
+        <div class="product-card" role="listitem">
+          <div class="product-img-box" role="img" alt="소창 키친 무라벨 와입스 대표 이미지">[PRODUCT 3 IMAGE PLACEHOLDER]</div>
+          <div class="product-title">소창 키친 무라벨 와입스</div>
+          <div class="product-price">12,000원 (5장 세트) <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">(다용도 에코)</span></div>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-wireframe" style="flex: 1; justify-content: center;" aria-label="소창 키친 무라벨 와입스 상세페이지 보기">상세보기</button>
+            <button type="button" class="btn-wireframe" aria-label="소창 키친 무라벨 와입스 장바구니 담기">🛒</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1장 체험팩 100% 환급 이벤트 배너 -->
+      <div class="event-banner-box" role="region" aria-label="1장 체험팩 신청 100% 환급 이벤트 배너">
+        <div>
+          <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 4px;">🎁 [1장 체험팩 이벤트] 3,000원에 먼저 써보세요!</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">본품 구매 시 100% 즉시 환급되는 할인 쿠폰 자동 발급</div>
+        </div>
+        <button type="button" class="btn-primary-wf" style="padding: 10px 20px; font-size: 0.9rem;" aria-label="1장 체험팩 신청 페이지로 이동">체험팩 신청하기</button>
+      </div>
+
+      <!-- [확인 필요 항목] 운영법무 정책 명시 박스 -->
+      <div style="margin-top: 14px; padding: 12px 16px; background-color: #fff8e6; border: 1px solid #ffe0b2; border-radius: 6px; font-size: 0.85rem; color: #8c6d00;" role="note" aria-label="확인 필요 운영법무 정책 지침">
+        📌 <strong>[확인 필요 / 운영법무 정책 명시 지침]</strong> 30일 무료 체험 및 무료 시착의 자격 · 비용 · 반품마감 조건 (운영법무 정책 확정 후 CTA 주변에 명시 예정)
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-06: Pop-up Store Section -->
+    <section class="wf-section" aria-labelledby="sec-p01-06-title">
+      <div class="wf-section-label">P-01-06: 성수 팝업스토어 안내 &amp; 위치지도 연결</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-06-title">OFFLINE POP-UP: 성수 팝업스토어</h2>
+        <p class="sec-desc">"시간을 짓는 소창 공간" - 오프라인 감성 리추얼 체험관</p>
+      </div>
+
+      <div class="popup-split">
+        <div class="map-box" role="region" aria-label="성수 팝업스토어 카카오 지도 위치">
+          [KAKAO MAP API PLACEHOLDER]
+          <br>
+          서울 성동구 연무장길 15
+          <br><br>
+          <button type="button" class="btn-wireframe" aria-label="카카오 지도 앱으로 신주소 길찾기">📍 카카오 지도로 길찾기</button>
+        </div>
+
+        <div class="popup-info-box">
+          <div style="font-size: 1.2rem; font-weight: 800; margin-bottom: 12px;">성수 팝업스토어 방문 혜택</div>
+          <ul style="list-style: square; padding-left: 20px; margin-bottom: 20px; font-size: 0.95rem;">
+            <li>운영 기간: 2026.08.15 ~ 2026.09.15 (11:00 ~ 20:00)</li>
+            <li>방문자 전원 무라벨 와입스 1장 무료 증정</li>
+            <li>현장 구매 시 실시간 자수 각인 서비스 제공</li>
+            <li>잔여 타임슬롯: 14:00 (3석 남음)</li>
+          </ul>
+
+          <a href="#modal-m01" class="btn-primary-wf" style="display: block; text-align: center;" aria-haspopup="dialog">🎟️ 팝업스토어 1초 사전 방문 예약하기 (M-01)</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-07: Editorial & Lookbook -->
+    <section class="wf-section" aria-labelledby="sec-p01-07-title">
+      <div class="wf-section-label">P-01-07: 에디토리얼 매거진 &amp; 1-Click 룩북</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-07-title">EDITORIAL &amp; LIFESTYLE LOOKBOOK</h2>
+        <p class="sec-desc">공간을 빛내는 소창 연출 컷과 브랜드 이야기</p>
+      </div>
+
+      <div class="lookbook-grid">
+        <div class="lookbook-card" tabindex="0">
+          <div class="lookbook-img-box" role="img" alt="햇살 드는 아침 욕실의 리추얼 룩북 연출 이미지">
+            [LOOKBOOK IMAGE 1 PLACEHOLDER]
+            <div class="tag-pin" aria-label="3겹 데일리 소창 타월 18,000원 1-Click 장바구니 담기">+</div>
+          </div>
+          <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 4px;">"햇살 드는 아침 욕실의 리추얼"</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">디렉터 칼럼: 왜 우리는 4번이나 원단을 삶았는가?</div>
+        </div>
+
+        <div class="lookbook-card" tabindex="0">
+          <div class="lookbook-img-box" role="img" alt="소창으로 완성하는 에코 키친 룩북 연출 이미지">
+            [LOOKBOOK IMAGE 2 PLACEHOLDER]
+            <div class="tag-pin" aria-label="무라벨 와입스 5장 세트 12,000원 1-Click 장바구니 담기">+</div>
+          </div>
+          <div style="font-weight: 800; font-size: 1.05rem; margin-bottom: 4px;">"소창으로 완성하는 에코 키친"</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">무라벨 와입스를 활용한 친환경 주방 세팅 팁</div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button type="button" class="btn-wireframe" style="padding: 10px 20px;" aria-label="에디토리얼 매거진 전체 칼럼 목록 읽기">📖 에디토리얼 매거진 전체 읽기</button>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-08: SNS & Newsletter -->
+    <section class="wf-section" aria-labelledby="sec-p01-08-title">
+      <div class="wf-section-label">P-01-08: SNS 리얼 언박싱 갤러리 &amp; 뉴스레터</div>
+      
+      <div class="sec-header">
+        <h2 class="sec-title" id="sec-p01-08-title">REAL CUSTOMER UNBOXING &amp; REVIEWS</h2>
+        <p class="sec-desc">고객님들이 전해주는 100% 무비닐 패키징 생생 후기</p>
+      </div>
+
+      <div class="insta-grid" role="list" aria-label="고객 인스타그램 언박싱 후기 사진 목록">
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 1]</div>
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 2]</div>
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 3]</div>
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 4]</div>
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 5]</div>
+        <div class="insta-box" role="listitem" tabindex="0">[INSTA 6]</div>
+      </div>
+
+      <div class="newsletter-box" role="region" aria-label="뉴스레터 이메일 구독 영역">
+        <div style="font-size: 1.1rem; font-weight: 800; margin-bottom: 6px;">✉️ 플로뜰리에 리추얼 뉴스레터 구독</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">소창 이야기와 팝업스토어 이벤트를 가장 먼저 전해드립니다.</div>
+        
+        <form class="newsletter-form" action="#" method="post" aria-label="뉴스레터 구독 신청 폼">
+          <label for="newsletter-email" class="sr-only">구독용 이메일 주소 입력</label>
+          <input type="email" id="newsletter-email" placeholder="이메일 주소를 입력해 주세요" class="input-wf" value="user@example.com" required aria-required="true">
+          <button type="submit" class="btn-primary-wf" style="padding: 10px 20px; font-size: 0.9rem;">무료 구독하기</button>
+        </form>
+      </div>
+    </section>
+
+
+    <!-- SECTION P-01-09: Footer -->
+    <footer class="wf-section" role="contentinfo" aria-label="사이트 푸터 정보">
+      <div class="wf-section-label">P-01-09: 푸터 &amp; 웹접근성 / 고객센터</div>
+      
+      <div class="footer-box">
+        <div class="footer-top">
+          <div>
+            <div style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">FLOTTELIER</div>
+            <div style="font-size: 0.85rem; color: #a3b0a7;">CS CENTER: 1600-0000 (카카오톡 @플로뜰리에 24시간 접수)</div>
+            <div style="font-size: 0.8rem; color: #7f8c83; margin-top: 4px;">서울시 성동구 연무장길 15 플로뜰리에 타워</div>
+          </div>
+          
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="#modal-m02" class="btn-wireframe" style="background-color: var(--bg-gray-mid); border: none;" aria-haspopup="dialog">📄 KC 인증서 원문 (M-02)</a>
+            <button type="button" class="btn-wireframe" style="background-color: var(--bg-gray-mid); border: none;" aria-label="세탁 지침서 PDF 소장 다운로드">📥 세탁지침서 PDF</button>
+          </div>
+        </div>
+
+        <ul class="footer-links" role="list">
+          <li role="listitem" tabindex="0">이용약관</li>
+          <li role="listitem" tabindex="0">개인정보처리방침</li>
+          <li role="listitem" tabindex="0">사업자정보확인</li>
+          <li role="listitem" tabindex="0">고객센터</li>
+          <li role="listitem" tabindex="0">공식 SNS</li>
+        </ul>
+
+        <div style="font-size: 0.75rem; color: #7f8c83; margin-top: 15px; display: flex; justify-content: space-between;">
+          <span>© 2026 FLOTTELIER All rights reserved.</span>
+          <a href="#main-content" style="color: #a3b0a7;" aria-label="화면 최상단으로 이동">▲ TOP 최상단으로 이동</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+
+  <!-- PURE CSS MODAL M-01: Pop-up Store Reservation Modal -->
+  <div class="modal-overlay" id="modal-m01" role="dialog" aria-modal="true" aria-labelledby="modal-m01-title">
+    <div class="modal-card">
+      <a href="#" class="modal-close" aria-label="모달 닫기">×</a>
+      <div class="wf-section-label" style="top: -12px;">M-01: 성수 팝업스토어 1초 사전예약 모달</div>
+      
+      <h2 id="modal-m01-title" style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; margin-top: 10px;">
+        성수 팝업스토어 사전 예약
+      </h2>
+
+      <div style="margin-bottom: 14px;">
+        <label for="popup-date" style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">1. 방문 날짜 선택</label>
+        <div id="popup-date" class="input-wf" style="background-color: var(--bg-gray-light);" tabindex="0">2026년 8월 20일 (목) 📅</div>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">2. 방문 시간 선택</span>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;" role="group" aria-label="방문 희망 시간대 선택">
+          <button type="button" class="btn-wireframe" style="opacity: 0.5;" disabled aria-disabled="true">11:00 [마감]</button>
+          <button type="button" class="btn-wireframe" style="border: 2px solid var(--bg-gray-dark); font-weight: bold;" aria-pressed="true">14:00 [3석 남음]</button>
+          <button type="button" class="btn-wireframe" aria-pressed="false">16:00 [8석 남음]</button>
+          <button type="button" class="btn-wireframe" aria-pressed="false">18:00 [잔여 여유]</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <span style="font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 4px;">3. 예약자 정보</span>
+        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+          <label for="user-name" class="sr-only">예약자 성함</label>
+          <input type="text" id="user-name" value="연우" class="input-wf" readonly aria-label="예약자 성함">
+          <label for="user-phone" class="sr-only">예약자 연락처</label>
+          <input type="text" id="user-phone" value="010-1234-5678" class="input-wf" readonly aria-label="예약자 휴대폰 번호">
+        </div>
+        <div class="input-wf" style="background-color: var(--bg-gray-light);" tabindex="0" aria-label="동반 인원 2명 선택됨">동반 인원: 2명 (본인 포함) ▼</div>
+      </div>
+
+      <a href="#" class="btn-primary-wf" style="display: block; text-align: center; width: 100%;" aria-label="성수 팝업스토어 사전 방문 예약 완료하기">🎟️ 사전 예약 완료하기 (카카오 알림톡 발송)</a>
+    </div>
+  </div>
+
+
+  <!-- PURE CSS MODAL M-02: KC Safety Certificate Modal -->
+  <div class="modal-overlay" id="modal-m02" role="dialog" aria-modal="true" aria-labelledby="modal-m02-title">
+    <div class="modal-card" style="max-width: 650px;">
+      <a href="#" class="modal-close" aria-label="모달 닫기">×</a>
+      <div class="wf-section-label" style="top: -12px;">M-02: KC 인증 &amp; 4無 성적서 원문 모달</div>
+      
+      <h2 id="modal-m02-title" style="font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; margin-top: 10px;">
+        국가 공인 KC 안전성 인증 &amp; 4無 시험성적서 원문
+      </h2>
+
+      <div style="background-color: var(--bg-gray-mid); border: 1px dashed var(--border-dark); height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 6px; margin-bottom: 16px;" role="img" aria-label="국가공인 KOTITI 시험연구원 공인 시험성적서 고화질 이미지">
+        <div style="font-weight: 800; font-size: 1rem; margin-bottom: 8px;">[KOTITI 시험연구원 공인 성적서 원문 고화질 이미지]</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">
+          - 시험 항목: 형광증백제 0.00% 불검출 (PASSED)<br>
+          - 더마테스트: 영유아 피부 자극 EXCELLENT 등급<br>
+          - 4無 검증: 무표백 · 무염색 · 무형광 · 무향료 통과
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" class="btn-wireframe" aria-label="성적서 원문 200퍼센트 확대 보기">🔍 200% HD 확대보기</button>
+        <a href="#" class="btn-primary-wf" style="font-size: 0.85rem; padding: 8px 16px;" aria-label="KC 인증 및 4무 시험성적서 원본 PDF 파일 다운로드">📄 원본 PDF 다운로드</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

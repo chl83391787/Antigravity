@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김환경 특화 와이어프레임 | 클린소창 그린워싱 Zero</title>
+  <style>
+    :root {
+      --bg: #F4F6F4;
+      --card: #FFFFFF;
+      --border: #C8D2C8;
+      --dark: #1E281E;
+      --green-cert: #2D6A4F;
+      --kraft: #B5835A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: var(--bg); color: var(--dark); padding: 20px; }
+    
+    .green-cert-banner { background: var(--green-cert); color: #FFF; padding: 12px 20px; border-radius: 8px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .persona-badge { background: var(--kraft); color: #FFF; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+    
+    .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .card { background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 24px; }
+    
+    /* Eco Specs Sheet Table */
+    .eco-sheet-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    .eco-sheet-table th, .eco-sheet-table td { border: 1px solid var(--border); padding: 10px; text-align: center; }
+    .eco-sheet-table th { background: #E8EFE8; font-weight: bold; }
+    
+    .fsc-tag { background: #FAF2E8; border: 1px solid var(--kraft); color: var(--kraft); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+    
+    .btn-cta { background: var(--green-cert); color: #FFF; border: none; padding: 14px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 12px; }
+    .btn-recycle { background: #52796F; color: #FFF; border: none; padding: 12px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- Green Cert Header -->
+  <div class="green-cert-banner">
+    <div>
+      <span class="persona-badge">김환경 페르소나 특화 와이어프레임</span>
+      <h2 style="font-size: 18px; margin-top: 4px;">🌿 국가 공인 환경표지 인증서 원본 1초 공식 조회</h2>
+    </div>
+    <button style="background: #FFF; color: var(--green-cert); border: none; padding: 8px 14px; border-radius: 4px; font-weight: bold; cursor: pointer;" onclick="openGovLink()">
+      🔗 환경부 공식 인증 조회 시스템 1초 이동 (M-02)
+    </button>
+  </div>
+
+  <div class="grid-layout">
+    <!-- Left: Eco Specs Sheet & FSC Range Clarity -->
+    <div class="card">
+      <span class="fsc-tag">FSC 포장재 전용 인증 (제품 원단 제외)</span>
+      <h3 style="margin-bottom: 8px;">📊 객관적 친환경 정보표 (Eco Specs Sheet)</h3>
+      <p style="font-size: 12px; color: #666; margin-bottom: 12px;">그린워싱 배제를 위해 전 상품에 동일 지표로 검증 수치를 공개합니다.</p>
+
+      <table class="eco-sheet-table">
+        <thead>
+          <tr>
+            <th>검증 지표</th>
+            <th>4차 정련 무비닐 소창</th>
+            <th>일반 면 수건</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>탄소 절감률</strong></td>
+            <td style="color: var(--green-cert); font-weight: bold;">35% 저감 (저탄소)</td>
+            <td>기준 100%</td>
+          </tr>
+          <tr>
+            <td><strong>제조 물 사용량</strong></td>
+            <td style="color: var(--green-cert); font-weight: bold;">120L 절감</td>
+            <td>450L 사용</td>
+          </tr>
+          <tr>
+            <td><strong>포장재 비닐 함량</strong></td>
+            <td style="color: var(--kraft); font-weight: bold;">0% (100% 종이)</td>
+            <td>비닐 100% 포장</td>
+          </tr>
+          <tr>
+            <td><strong>예상 수명 연수</strong></td>
+            <td style="color: var(--green-cert); font-weight: bold;">3년 (1,000회 세탁)</td>
+            <td>1년 (200회 세탁)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top: 14px; font-size: 12px; background: #E8EFE8; padding: 10px; border-radius: 6px;">
+        💧 <strong>정련 폐수 공정 공개:</strong> 100% 식물성 생분해 세제 정련 후 자체 수처리 시설에서 1단계 미생물 정화 후 방류됩니다.
+      </div>
+    </div>
+
+    <!-- Right: Plastic-Free Option & Recycle Program -->
+    <div class="card">
+      <h3>📦 무비닐 0% 포장 & 묶음 합배송 선택</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 16px;">과대포장 없는 친환경 포장 옵션을 선택하세요.</p>
+
+      <div style="background: #FAF8F5; border: 1px solid var(--border); padding: 14px; border-radius: 8px; margin-bottom: 12px;">
+        <label style="font-weight: bold; font-size: 13px;">
+          <input type="checkbox" checked> 🌲 과대포장 Zero 무비닐 100% 종이 포장재 (무료)
+        </label>
+        <p style="font-size: 11px; color: #666; margin-top: 4px; padding-left: 20px;">FSC 인증 크라프트 종이 테이프 및 종이 완충재 사용</p>
+      </div>
+
+      <div style="background: #FAF8F5; border: 1px solid var(--border); padding: 14px; border-radius: 8px; margin-bottom: 14px;">
+        <label style="font-weight: bold; font-size: 13px;">
+          <input type="checkbox" checked> 🚚 묶음 합배송 선택 (탄소 배출 100g 절감)
+        </label>
+        <p style="font-size: 11px; color: var(--green-cert); margin-top: 4px; padding-left: 20px;">+ 탄소배출 저감 포인트 1,000p 즉시 적립</p>
+      </div>
+
+      <button class="btn-cta" onclick="alert('N Pay 1초 무비닐 결제로 이동합니다.')">🟢 N Pay 무비닐 0% 1초 결제</button>
+      
+      <!-- Free Recycling Program -->
+      <button class="btn-recycle" onclick="alert('자원 회수 무상 수거 신청 모달(M-03)이 실행됩니다.')">♻️ 수명 다한 수건/포장재 무료 수거 신청 (M-03)</button>
+    </div>
+  </div>
+
+  <script>
+    function openGovLink() {
+      alert('환경부 공인 인증기관 공식 조회 시스템(M-02) 팝업 및 외부 연결 링크로 1초 이동합니다.');
+    }
+  </script>
+</body>
+</html>

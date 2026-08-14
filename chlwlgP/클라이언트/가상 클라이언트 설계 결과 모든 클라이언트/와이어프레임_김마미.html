@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김마미 특화 와이어프레임 | 플로뜰리에 KC 안심 육아 소창</title>
+  <style>
+    :root {
+      --bg: #F9F8F6;
+      --card: #FFFFFF;
+      --border: #D8D2C6;
+      --dark: #2A2825;
+      --green-kc: #2A6F47;
+      --accent: #D97736;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: var(--bg); color: var(--dark); padding: 20px; }
+    
+    /* KC Top Fixed Header */
+    .kc-top-banner { background: var(--green-kc); color: #FFF; padding: 12px 20px; border-radius: 8px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .persona-badge { background: var(--accent); color: #FFF; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+    
+    .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .card { background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 24px; }
+    
+    /* 2겹 vs 3겹 Comparison Graph */
+    .chart-container { background: #F3F0E9; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-top: 16px; }
+    .bar-group { margin-bottom: 14px; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+    .bar-track { background: #E5E0D5; height: 14px; border-radius: 7px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 7px; transition: width 0.5s ease; }
+    
+    /* Mom Review 3-Way Filter */
+    .filter-pills { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .pill { padding: 6px 14px; background: #EFECE6; border: 1px solid var(--border); border-radius: 16px; font-size: 12px; cursor: pointer; }
+    .pill.active { background: var(--green-kc); color: #FFF; border-color: var(--green-kc); font-weight: bold; }
+    
+    .review-card { background: #FAF9F6; border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; font-size: 13px; }
+    .btn-cta { background: var(--green-kc); color: #FFF; border: none; padding: 14px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 12px; }
+  </style>
+</head>
+<body>
+
+  <!-- KC Banner Header -->
+  <div class="kc-top-banner">
+    <div>
+      <span class="persona-badge">김마미 페르소나 특화 와이어프레임</span>
+      <h2 style="font-size: 18px; margin-top: 4px;">🛡️ KC 안전성 인증 (어린이용 제품 안심) 100% 상도 노출</h2>
+    </div>
+    <button style="background: #FFF; color: var(--green-kc); border: none; padding: 8px 14px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+      📄 KC 공인 인증서 원문 보기 (M-02)
+    </button>
+  </div>
+
+  <div class="grid-layout">
+    <!-- Left: 2겹 vs 3겹 Interactive Spec Comparison -->
+    <div class="card">
+      <h3>📊 2겹(가제) vs 3겹(데일리) 실측 스펙 비교표</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 16px;">원하는 용도에 맞게 겹수를 선택하세요.</p>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+        <button class="pill active" onclick="switchLayer('2')">2겹 (신생아/가제 세안용)</button>
+        <button class="pill" onclick="switchLayer('3')">3겹 (유아/데일리 타월)</button>
+      </div>
+
+      <div class="chart-container">
+        <div class="bar-group">
+          <div class="bar-label">
+            <span>💧 순간 수분 흡수력 (속도)</span>
+            <span id="absorbVal">0.3초 (초고속)</span>
+          </div>
+          <div class="bar-track"><div id="absorbBar" class="bar-fill" style="width: 95%; background: var(--green-kc);"></div></div>
+        </div>
+
+        <div class="bar-group">
+          <div class="bar-label">
+            <span>🌬️ 자연 건조 속도</span>
+            <span id="dryVal">45분 (초스피드 건조)</span>
+          </div>
+          <div class="bar-track"><div id="dryBar" class="bar-fill" style="width: 90%; background: #457B9D;"></div></div>
+        </div>
+
+        <div class="bar-group">
+          <div class="bar-label">
+            <span>⚖️ 1장당 무게 (무게감)</span>
+            <span id="weightVal">72g (아주 가벼움)</span>
+          </div>
+          <div class="bar-track"><div id="weightBar" class="bar-fill" style="width: 40%; background: var(--accent);"></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; font-size: 13px; background: #FFF; border: 1px solid var(--border); padding: 12px; border-radius: 6px;">
+        <strong>💡 맘가이드 추천:</strong> <span id="recommendTxt">피부가 여린 신생아 침받이 및 밤 세안용으로 2겹 가제 수건을 추천합니다.</span>
+      </div>
+    </div>
+
+    <!-- Right: Real Mom Reviews 3-Way Filter -->
+    <div class="card">
+      <h3>👶 실사용 맘리뷰 3-Way 세부 필터 (평점 4.9)</h3>
+      <p style="font-size: 13px; color: #666; margin-bottom: 12px;">아기 연령 및 세탁 횟수별 실후기를 확인하세요.</p>
+
+      <div class="filter-pills">
+        <span class="pill active">전체 (1,240개)</span>
+        <span class="pill">#신생아 (0~6개월)</span>
+        <span class="pill">#영유아 (7~24개월)</span>
+        <span class="pill">#세탁50회후기</span>
+      </div>
+
+      <div class="review-card">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 4px;">
+          <span>연우맘 (신생아 3개월) ⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--green-kc);">[KC 인증 확인]</span>
+        </div>
+        <p>"아토피 초기 증상이 있어서 일반 수건 못 쓰는데 4차 정련 소창으로 바꾸고 먼지 안 날려서 너무 만족해요! 세탁기 30번 돌려도 먼지 0입니다."</p>
+      </div>
+
+      <div class="review-card">
+        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 4px;">
+          <span>지호맘 (영유아 18개월) ⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--green-kc);">[세탁50회인증]</span>
+        </div>
+        <p>"2겹은 세안용, 3겹은 목욕 타월로 쓰고 있어요. 건조기 안 돌리고 자연 건조해도 40분 만에 말라 냄새가 전혀 안 납니다."</p>
+      </div>
+
+      <!-- Towel Replacement Alert Switch -->
+      <div style="margin-top: 16px; background: #EFECE6; padding: 12px; border-radius: 6px; font-size: 13px;">
+        <label><input type="checkbox" checked> 🔔 6개월 수건 교체 주기 자동 알림 신청 (카카오 알림톡)</label>
+      </div>
+
+      <button class="btn-cta" onclick="alert('N Pay 1초 결제로 이동합니다.')">🟢 N Pay 1초 결제하기 (장당 단가 3,600원)</button>
+    </div>
+  </div>
+
+  <script>
+    function switchLayer(layer) {
+      const pills = document.querySelectorAll('.pill');
+      pills[0].classList.remove('active');
+      pills[1].classList.remove('active');
+
+      if (layer === '2') {
+        pills[0].classList.add('active');
+        document.getElementById('absorbVal').innerText = '0.3초 (초고속)';
+        document.getElementById('absorbBar').style.width = '95%';
+        document.getElementById('dryVal').innerText = '45분 (초스피드 건조)';
+        document.getElementById('dryBar').style.width = '90%';
+        document.getElementById('weightVal').innerText = '72g (아주 가벼움)';
+        document.getElementById('weightBar').style.width = '40%';
+        document.getElementById('recommendTxt').innerText = '피부가 여린 신생아 침받이 및 밤 세안용으로 2겹 가제 수건을 추천합니다.';
+      } else {
+        pills[1].classList.add('active');
+        document.getElementById('absorbVal').innerText = '0.5초 (고흡수)';
+        document.getElementById('absorbBar').style.width = '88%';
+        document.getElementById('dryVal').innerText = '60분 (쾌속 건조)';
+        document.getElementById('dryBar').style.width = '78%';
+        document.getElementById('weightVal').innerText = '110g (포근한 두께)';
+        document.getElementById('weightBar').style.width = '65%';
+        document.getElementById('recommendTxt').innerText = '아기 목욕 후 전신을 부드럽게 감싸주는 3겹 데일리 타월을 추천합니다.';
+      }
+    }
+  </script>
+</body>
+</html>

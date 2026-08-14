@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전체 상품 카탈로그 (P-04) - 플로뜰리에 (Flottelier) | 4차 정련 소창 리추얼 커머스</title>
+  <meta name="description" content="삶을 필요 없이 받자마자 바로 쓰는 4차 정련 강화 순면 소창 타월 컬렉션. 2겹 가제, 3겹 데일리, 4겹 바스타월, 선물세트 및 실시간 자수 프리뷰.">
+  
+  <!-- Google Fonts: Cormorant Garamond, Noto Serif KR, Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       Design System Tokens & Base
+       ========================================================================== */
+    :root {
+      --color-primary: #1A3B34;          /* Deep Forest Pine */
+      --color-primary-light: #E8F3F1;    /* Mist Sage Tint */
+      --color-accent-terracotta: #C47A5A;/* Warm Natural Terracotta */
+      --color-accent-sage: #7E8D7F;      /* Soft Organic Sage */
+      --color-accent-gold: #D97706;      /* Vintage Ochre */
+      --color-bg-main: #FAFDFD;          /* Pure Water Tinted White */
+      --color-bg-card: rgba(255, 255, 255, 0.94);
+      --color-bg-surface: #F5F8F7;
+      --color-text-main: #232527;        /* Charcoal Black */
+      --color-text-sub: #585D62;         /* Slate Grey */
+      --color-text-muted: #8E949A;       /* Soft Grey */
+      --color-border: rgba(220, 228, 226, 0.75);
+      --color-border-light: rgba(235, 240, 238, 0.8);
+      
+      --font-serif: 'Noto Serif KR', 'Cormorant Garamond', serif;
+      --font-sans: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 4px 20px rgba(26, 59, 52, 0.04);
+      --shadow-md: 0 10px 30px rgba(26, 59, 52, 0.08);
+      --shadow-lg: 0 20px 50px rgba(26, 59, 52, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg-main);
+      color: var(--color-text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* Ambient Watercolor Canvas Background */
+    #watercolorCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.9;
+    }
+
+    .ambient-blob-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .blob-1 {
+      position: absolute;
+      top: -15%;
+      left: -10%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(215, 240, 242, 0.65) 0%, rgba(230, 245, 238, 0.35) 45%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(80px);
+      animation: floatBlob1 24s infinite alternate ease-in-out;
+    }
+    .blob-2 {
+      position: absolute;
+      bottom: 5%;
+      right: -10%;
+      width: 65vw;
+      height: 65vw;
+      background: radial-gradient(circle, rgba(236, 228, 245, 0.55) 0%, rgba(248, 230, 238, 0.4) 45%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(90px);
+      animation: floatBlob2 28s infinite alternate ease-in-out;
+    }
+    @keyframes floatBlob1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(6%, 8%) scale(1.08); }
+    }
+    @keyframes floatBlob2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-7%, -6%) scale(1.12); }
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; border: none; background: none; cursor: pointer; }
+    img { max-width: 100%; height: auto; }
+
+    /* ==========================================================================
+       Top Notice Banner
+       ========================================================================== */
+    .top-bar {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      padding: 8px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 101;
+    }
+    .top-bar-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 0 auto;
+    }
+    .top-bar-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .top-bar-link {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       Header & Navigation
+       ========================================================================== */
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 253, 253, 0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 100;
+      transition: var(--transition-smooth);
+    }
+    .header-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 18px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-primary);
+      letter-spacing: 1px;
+    }
+    .brand-logo small {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-accent-sage);
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-item a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: var(--color-text-sub);
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 6px 0;
+    }
+    .nav-item a:hover, .nav-item.active a {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .nav-item a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width 0.3s ease;
+    }
+    .nav-item a:hover::after, .nav-item.active a::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-search-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--color-text-sub);
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.7);
+      transition: var(--transition-smooth);
+    }
+    .btn-search-toggle:hover {
+      background: #FFFFFF;
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .btn-cart-drawer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      padding: 9px 18px;
+      border-radius: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 14px rgba(26, 59, 52, 0.15);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .btn-cart-drawer:hover {
+      background: #254F46;
+      transform: translateY(-1px);
+    }
+    .cart-counter {
+      background: var(--color-accent-terracotta);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       Hero Section / Category Header
+       ========================================================================== */
+    .catalog-hero {
+      position: relative;
+      z-index: 1;
+      padding: 60px 24px 40px 24px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .catalog-tag {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--color-accent-sage);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .catalog-title {
+      font-family: var(--font-serif);
+      font-size: 42px;
+      font-weight: 400;
+      color: var(--color-text-main);
+      line-height: 1.35;
+      margin-bottom: 16px;
+    }
+    .catalog-desc {
+      font-size: 15px;
+      color: var(--color-text-sub);
+      max-width: 680px;
+      margin: 0 auto 32px auto;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    /* 4대 안심 보증 뱃지 바 */
+    .trust-badges-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .trust-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--color-border);
+      border-radius: 30px;
+      font-size: 12px;
+      color: var(--color-text-main);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-sm);
+    }
+    .trust-badge-pill svg {
+      width: 14px;
+      height: 14px;
+      color: var(--color-primary);
+    }
+
+    /* 1장 체험팩 100% 환급 띠배너 */
+    .trial-refund-banner {
+      background: linear-gradient(135deg, #1A3B34 0%, #295B50 100%);
+      color: #FFFFFF;
+      padding: 16px 28px;
+      border-radius: 12px;
+      margin: 20px auto 0 auto;
+      max-width: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 10px 30px rgba(26, 59, 52, 0.12);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .trial-refund-banner:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(26, 59, 52, 0.18);
+    }
+    .trial-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+    .trial-badge {
+      background: var(--color-accent-terracotta);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .trial-banner-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .trial-banner-sub {
+      font-size: 12px;
+      opacity: 0.88;
+    }
+    .btn-trial-action {
+      background: #FFFFFF;
+      color: var(--color-primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 20px;
+      white-space: nowrap;
+      transition: var(--transition-smooth);
+    }
+    .btn-trial-action:hover {
+      background: var(--color-primary-light);
+    }
+
+    /* ==========================================================================
+       Filter & Catalog Controls Section
+       ========================================================================== */
+    .catalog-main {
+      position: relative;
+      z-index: 1;
+      max-width: 1360px;
+      margin: 40px auto 0 auto;
+      padding: 0 36px;
+    }
+
+    /* Category Tabs */
+    .category-tabs-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .category-tab-btn {
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-sub);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .category-tab-btn:hover {
+      background: #FFFFFF;
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .category-tab-btn.active {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      border-color: var(--color-primary);
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(26, 59, 52, 0.12);
+    }
+    .category-tab-btn .tab-count {
+      font-size: 11px;
+      opacity: 0.75;
+    }
+    .category-tab-btn.active .tab-count {
+      opacity: 1;
+      color: #D3E7E3;
+    }
+
+    /* Multi-Filter Bar (Persona, Color, Price, Sort, Search) */
+    .filter-panel {
+      background: var(--color-bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 20px 28px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+    .filter-panel-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .filter-group-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+    }
+    .persona-tag-btn {
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-sub);
+      transition: var(--transition-smooth);
+    }
+    .persona-tag-btn:hover {
+      border-color: var(--color-accent-sage);
+      color: var(--color-primary);
+    }
+    .persona-tag-btn.active {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    /* Color Palette Filter */
+    .color-swatch-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 10px;
+      padding-left: 12px;
+      border-left: 1px solid var(--color-border);
+    }
+    .color-swatch-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+    .color-swatch-dot:hover {
+      transform: scale(1.15);
+    }
+    .color-swatch-dot.active {
+      border-color: var(--color-primary);
+      transform: scale(1.15);
+    }
+    .color-swatch-dot::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #232527;
+      color: #FFFFFF;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .color-swatch-dot:hover::after {
+      opacity: 1;
+    }
+
+    /* Right Controls: Sort & Search */
+    .filter-group-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .search-input-wrap {
+      position: relative;
+    }
+    .search-input {
+      padding: 8px 16px 8px 36px;
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      background: #FFFFFF;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--color-text-main);
+      width: 200px;
+      transition: var(--transition-smooth);
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      width: 260px;
+      box-shadow: 0 0 0 3px rgba(26, 59, 52, 0.08);
+    }
+    .search-icon-inside {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-muted);
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .sort-select {
+      padding: 8px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--color-border);
+      background: #FFFFFF;
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--color-text-sub);
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+    .sort-select:hover, .sort-select:focus {
+      border-color: var(--color-primary);
+    }
+
+    /* Result Meta Count */
+    .catalog-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--color-text-sub);
+    }
+    .status-count strong {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .status-filter-reset {
+      font-size: 12px;
+      color: var(--color-accent-terracotta);
+      text-decoration: underline;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* ==========================================================================
+       Product Grid & Product Cards
+       ========================================================================== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .product-card {
+      background: var(--color-bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 24px;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(26, 59, 52, 0.25);
+    }
+
+    /* Product Visual Area */
+    .product-visual-wrap {
+      position: relative;
+      height: 280px;
+      background: var(--color-bg-surface);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border-light);
+    }
+    .product-img-canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-img-canvas {
+      transform: scale(1.04);
+    }
+
+    /* Badges */
+    .product-badge-group {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 2;
+    }
+    .card-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 16px;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(8px);
+    }
+    .badge-refined {
+      background: rgba(26, 59, 52, 0.9);
+      color: #FFFFFF;
+    }
+    .badge-best {
+      background: rgba(196, 122, 90, 0.95);
+      color: #FFFFFF;
+    }
+    .badge-eco {
+      background: rgba(126, 141, 127, 0.9);
+      color: #FFFFFF;
+    }
+    .badge-trial {
+      background: #D97706;
+      color: #FFFFFF;
+    }
+
+    /* Visual Hover Actions */
+    .product-hover-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to top, rgba(26, 59, 52, 0.8) 0%, rgba(26, 59, 52, 0) 100%);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: var(--transition-smooth);
+      z-index: 3;
+    }
+    .product-card:hover .product-hover-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .btn-quick-preview {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--color-primary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-quick-preview:hover {
+      background: #FFFFFF;
+      transform: scale(1.04);
+    }
+
+    /* Product Content */
+    .product-info-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-layer-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-accent-sage);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .product-name-ko {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .product-name-en {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .product-features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .feature-chip {
+      font-size: 11px;
+      background: rgba(240, 244, 242, 0.8);
+      color: var(--color-text-sub);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Price & Unit Calculation */
+    .product-pricing-box {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--color-border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .price-main-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .unit-calc-pill {
+      font-size: 11px;
+      color: var(--color-accent-terracotta);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .price-amount {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      font-family: var(--font-sans);
+    }
+    .price-currency {
+      font-size: 14px;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+    .original-price {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      text-decoration: line-through;
+      margin-left: 6px;
+      font-weight: 400;
+    }
+
+    /* Card Actions */
+    .card-actions-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .btn-add-cart {
+      flex: 1;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 14px;
+      border-radius: 6px;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-add-cart:hover {
+      background: #234E45;
+    }
+    .btn-embroidery-mini {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-sub);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: var(--transition-smooth);
+      white-space: nowrap;
+    }
+    .btn-embroidery-mini:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    /* Ratings */
+    .card-rating-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--color-text-sub);
+      margin-bottom: 12px;
+    }
+    .rating-stars {
+      color: #F59E0B;
+      letter-spacing: 1px;
+    }
+    .rating-score {
+      font-weight: 600;
+      color: var(--color-text-main);
+    }
+
+    /* Empty Search State (EX-01) */
+    .empty-catalog-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+      background: var(--color-bg-card);
+      border-radius: 12px;
+      border: 1px dashed var(--color-border);
+      display: none;
+    }
+    .empty-state-icon {
+      font-size: 42px;
+      color: var(--color-text-muted);
+      margin-bottom: 16px;
+    }
+    .empty-state-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .empty-state-desc {
+      font-size: 14px;
+      color: var(--color-text-sub);
+      margin-bottom: 24px;
+    }
+    .btn-reset-filters {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       Editorial Inset Section: Sochang Ritual Comparison (Day 1 vs Day 90+)
+       ========================================================================== */
+    .ritual-inset-section {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 48px;
+      margin: 40px auto 80px auto;
+      max-width: 1200px;
+      box-shadow: var(--shadow-sm);
+    }
+    .inset-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 36px auto;
+    }
+    .inset-tag {
+      font-family: var(--font-serif);
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--color-accent-terracotta);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .inset-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+    .inset-desc {
+      font-size: 14px;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+    }
+    .ritual-timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .ritual-step-card {
+      background: #FAFDFD;
+      border: 1px solid var(--color-border-light);
+      border-radius: 8px;
+      padding: 22px;
+      text-align: center;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .ritual-step-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+    }
+    .step-number-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-weight: 700;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .step-timeline-name {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .step-timeline-day {
+      font-size: 12px;
+      color: var(--color-accent-terracotta);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .step-timeline-desc {
+      font-size: 12px;
+      color: var(--color-text-sub);
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    /* ==========================================================================
+       Interactive Modals & Drawers
+       ========================================================================== */
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(18, 33, 30, 0.55);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 20px;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-window {
+      background: #FFFFFF;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 840px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .modal-backdrop.active .modal-window {
+      transform: translateY(0) scale(1);
+    }
+    .btn-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-bg-surface);
+      color: var(--color-text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      z-index: 10;
+      transition: var(--transition-smooth);
+    }
+    .btn-modal-close:hover {
+      background: #232527;
+      color: #FFFFFF;
+    }
+
+    /* M-03 Real-Time Canvas Embroidery Simulator */
+    .embroidery-modal-body {
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+    .embroidery-canvas-container {
+      background: #F7F5F0;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+    }
+    #embroideryPreviewCanvas {
+      width: 100%;
+      max-width: 360px;
+      height: 280px;
+      border-radius: 4px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .embroidery-ctrl-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-title-serif {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .input-field-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-sub);
+    }
+    .custom-text-input {
+      padding: 10px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
+    .custom-text-input:focus {
+      border-color: var(--color-primary);
+    }
+    .thread-color-picker {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .thread-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .thread-btn.active {
+      border-color: #232527;
+      transform: scale(1.15);
+    }
+    .font-select-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .font-opt-btn {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 12px;
+      background: #FFFFFF;
+      transition: var(--transition-smooth);
+    }
+    .font-opt-btn.active {
+      background: var(--color-primary);
+      color: #FFFFFF;
+      border-color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    /* Cart Slide Drawer */
+    .cart-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(18, 33, 30, 0.4);
+      backdrop-filter: blur(4px);
+      z-index: 1050;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .cart-drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #FFFFFF;
+      z-index: 1060;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-drawer-overlay.active .cart-drawer {
+      transform: translateX(0);
+    }
+    .cart-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-header h3 {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      color: var(--color-primary);
+    }
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cart-item-card {
+      display: flex;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border-light);
+      align-items: center;
+    }
+    .cart-item-thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 6px;
+      background: var(--color-bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border-light);
+    }
+    .cart-item-info {
+      flex: 1;
+    }
+    .cart-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--color-text-main);
+    }
+    .cart-item-sub {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-bottom: 8px;
+    }
+    .cart-qty-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qty-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid var(--color-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: #FAFDFD;
+    }
+    .cart-item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      text-align: right;
+    }
+    .btn-remove-item {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 4px;
+      display: block;
+      text-align: right;
+    }
+
+    .cart-footer {
+      padding: 24px;
+      background: #FAFDFD;
+      border-top: 1px solid var(--color-border);
+    }
+    .cart-summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: var(--color-text-sub);
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      margin: 14px 0 18px 0;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+    }
+    .eco-pack-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--color-accent-sage);
+      margin-bottom: 16px;
+      background: var(--color-primary-light);
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .btn-checkout-npay {
+      width: 100%;
+      background: #03C75A;
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      transition: var(--transition-smooth);
+    }
+    .btn-checkout-npay:hover {
+      background: #02b350;
+    }
+    .btn-checkout-regular {
+      width: 100%;
+      background: var(--color-primary);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px;
+      border-radius: 8px;
+      transition: var(--transition-smooth);
+    }
+    .btn-checkout-regular:hover {
+      background: #254F46;
+    }
+
+    /* Toast Notification */
+    .toast-alert {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(26, 59, 52, 0.95);
+      color: #FFFFFF;
+      padding: 14px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(8px);
+      transform: translateY(100px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-alert.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       Footer
+       ========================================================================== */
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 80px 36px 40px 36px;
+      border-top: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      color: var(--color-text-sub);
+      margin-top: 80px;
+    }
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .footer-brand {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .footer-heading {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-main);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-links a {
+      color: var(--color-text-sub);
+      transition: var(--transition-smooth);
+    }
+    .footer-links a:hover {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border-light);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .ritual-timeline-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .header-inner { padding: 14px 20px; }
+      .nav-menu { display: none; }
+      .catalog-title { font-size: 32px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .ritual-timeline-grid { grid-template-columns: 1fr; }
+      .embroidery-modal-body { grid-template-columns: 1fr; padding: 24px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .catalog-main { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Organic Watercolor Background Layers -->
+  <div class="ambient-blob-container">
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+  </div>
+  <canvas id="watercolorCanvas"></canvas>
+
+  <!-- Top 4차 정련 보증 안내 띠배너 -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <span class="top-bar-badge">4차 정련 완료 완제품</span>
+      <span>삶고 길들이는 번거로움 없이, 택배 상자를 여는 순간 바로 뽀송하게 사용하세요.</span>
+      <span class="top-bar-link" onclick="openCertModal()">KC 4無 인증서 보기 &rarr;</span>
+    </div>
+  </div>
+
+  <!-- Main Global Navigation Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo-wrap">
+        <span class="brand-logo">Flottelier<small>플로뜰리에</small></span>
+      </a>
+      
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">MAIN</a></li>
+        <li class="nav-item"><a href="brand.html">BRAND STORY</a></li>
+        <li class="nav-item active"><a href="category.html">COLLECTION (카탈로그)</a></li>
+        <li class="nav-item"><a href="index.html#shiroito">RITUAL GUIDE</a></li>
+        <li class="nav-item"><a href="사이트맵.html">SITEMAP</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <button class="btn-search-toggle" onclick="document.getElementById('keywordSearchInput').focus()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>검색</span>
+        </button>
+        <button class="btn-cart-drawer" onclick="toggleCartDrawer(true)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span>장바구니</span>
+          <span class="cart-counter" id="headerCartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header Area -->
+  <section class="catalog-hero">
+    <span class="catalog-tag">Flottelier Sochang Catalog & Collection</span>
+    <h1 class="catalog-title">겹수와 용도로 만나는<br>고요한 순면 소창 컬렉션</h1>
+    <p class="catalog-desc">
+      강화도 맑은 물로 4단계 전통 가마솥 정련을 마쳐, 삶을 필요 없이 첫날부터 포근합니다.<br>
+      내 피부와 일상 리추얼에 딱 맞는 겹수(2/3/4겹)와 자수 맞춤 옵션을 선택해보세요.
+    </p>
+
+    <!-- 안심 보증 뱃지들 -->
+    <div class="trust-badges-bar">
+      <div class="trust-badge-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span>4차 정련 100% 완료 완제품</span>
+      </div>
+      <div class="trust-badge-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>4無 무화학 가공 (무형광 · 무표백 · 무염색 · 무향료)</span>
+      </div>
+      <div class="trust-badge-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+        <span>100% 무비닐 에코 패키징 배송</span>
+      </div>
+    </div>
+
+    <!-- 1장 체험팩 100% 환급 배너 -->
+    <div class="trial-refund-banner" onclick="openTrialModal()">
+      <div class="trial-banner-left">
+        <span class="trial-badge">고객 안심 100% 환급</span>
+        <div>
+          <div class="trial-banner-title">망설여지시나요? 3,000원에 1장 먼저 써보세요</div>
+          <div class="trial-banner-sub">체험 후 본품 재구매 시 3,000원 전액 환급 쿠폰을 100% 자동 지급해 드립니다.</div>
+        </div>
+      </div>
+      <button class="btn-trial-action">1장 체험팩 신청하기 &rarr;</button>
+    </div>
+  </section>
+
+  <!-- Catalog Controls & Filters -->
+  <main class="catalog-main">
+
+    <!-- Category Tabs -->
+    <div class="category-tabs-container" id="categoryTabs">
+      <button class="category-tab-btn active" data-category="ALL">
+        <span>전체 컬렉션</span>
+        <span class="tab-count">(12)</span>
+      </button>
+      <button class="category-tab-btn" data-category="2LAYER">
+        <span>2겹 페이스 & 가제</span>
+        <span class="tab-count">(2)</span>
+      </button>
+      <button class="category-tab-btn" data-category="3LAYER">
+        <span>3겹 데일리 시그니처</span>
+        <span class="tab-count">(2)</span>
+      </button>
+      <button class="category-tab-btn" data-category="4LAYER">
+        <span>4겹 프리미엄 바스타월</span>
+        <span class="tab-count">(2)</span>
+      </button>
+      <button class="category-tab-btn" data-category="GIFT">
+        <span>선물 & 자수 답례품 세트</span>
+        <span class="tab-count">(3)</span>
+      </button>
+      <button class="category-tab-btn" data-category="CARE">
+        <span>소창 케어 & 리추얼 도구</span>
+        <span class="tab-count">(3)</span>
+      </button>
+    </div>
+
+    <!-- Multi Filter Panel -->
+    <div class="filter-panel">
+      <div class="filter-panel-row">
+        <!-- Left: Persona Filter & Color Swatch -->
+        <div class="filter-group-left">
+          <span class="filter-label">페르소나 큐레이션:</span>
+          <button class="persona-tag-btn active" data-persona="ALL">전체보기</button>
+          <button class="persona-tag-btn" data-persona="SENSITIVE">#민감·알레르기피부</button>
+          <button class="persona-tag-btn" data-persona="BABY">#아기·임산부</button>
+          <button class="persona-tag-btn" data-persona="HOTEL">#도톰볼륨선호</button>
+          <button class="persona-tag-btn" data-persona="GIFT">#집들이·선물</button>
+          <button class="persona-tag-btn" data-persona="ECO">#에코미니멀</button>
+
+          <!-- Color Swatches -->
+          <div class="color-swatch-group">
+            <span class="filter-label">자연 컬러:</span>
+            <div class="color-swatch-dot active" style="background: #F7F5EE;" data-color="ALL" data-tooltip="전체 컬러"></div>
+            <div class="color-swatch-dot" style="background: #FAF8F2;" data-color="IVORY" data-tooltip="내추럴 아이보리"></div>
+            <div class="color-swatch-dot" style="background: #E5ECE7;" data-color="SAGE" data-tooltip="오가닉 세이지"></div>
+            <div class="color-swatch-dot" style="background: #EFE4DC;" data-color="TERRACOTTA" data-tooltip="웜 테라코타"></div>
+          </div>
+        </div>
+
+        <!-- Right: Search & Sort -->
+        <div class="filter-group-right">
+          <div class="search-input-wrap">
+            <svg class="search-icon-inside" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="keywordSearchInput" class="search-input" placeholder="상품명, 겹수, 용도 검색...">
+          </div>
+
+          <select id="sortSelect" class="sort-select">
+            <option value="RECOMMEND">플로뜰리에 추천순</option>
+            <option value="POPULAR">인기 판매순</option>
+            <option value="PRICE_LOW">장당 최저가순</option>
+            <option value="PRICE_HIGH">높은 가격순</option>
+            <option value="RATING">리뷰 평점순</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="catalog-status-bar">
+      <div class="status-count">
+        총 <strong id="productTotalCount">12</strong>개의 소창 리추얼 아이템
+      </div>
+      <div class="status-filter-reset" id="resetFilterBtn" onclick="resetAllFilters()">
+        필터 초기화 &times;
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+      <!-- Dynamically Rendered by JavaScript -->
+    </div>
+
+    <!-- Empty Search State (EX-01) -->
+    <div class="empty-catalog-state" id="emptyState">
+      <div class="empty-state-icon">🌿</div>
+      <h3 class="empty-state-title">검색된 소창 컬렉션이 없습니다.</h3>
+      <p class="empty-state-desc">다른 검색어를 입력하시거나 필터를 초기화해 보세요.</p>
+      <button class="btn-reset-filters" onclick="resetAllFilters()">전체 상품 보러가기</button>
+    </div>
+
+    <!-- Editorial Inset: Sochang Ritual Softness Timeline -->
+    <section class="ritual-inset-section">
+      <div class="inset-header">
+        <span class="inset-tag">Sochang Ritual Timeline</span>
+        <h2 class="inset-title">세탁할수록 구름처럼 부드러워지는 마법</h2>
+        <p class="inset-desc">
+          플로뜰리에의 4차 정련 소창은 첫날부터 뽀송하게 사용되며, 
+          세탁을 거듭할수록 섬유 사이의 공기층이 도톰하게 차올라 흡수력과 촉감이 극대화됩니다.
+        </p>
+      </div>
+
+      <div class="ritual-timeline-grid">
+        <div class="ritual-step-card">
+          <div class="step-number-badge">1</div>
+          <h4 class="step-timeline-name">첫 만남 (4차 정련 완료)</h4>
+          <div class="step-timeline-day">Day 1 ~ 5</div>
+          <p class="step-timeline-desc">집에서 번거롭게 삶을 필요 없이 바로 사용하는 깨끗하고 뽀송한 순면 감촉.</p>
+        </div>
+        <div class="ritual-step-card">
+          <div class="step-number-badge">2</div>
+          <h4 class="step-timeline-name">길들이기 (엠보싱 형성)</h4>
+          <div class="step-timeline-day">Day 15 (세탁 10회)</div>
+          <p class="step-timeline-desc">격자 섬유가 자연스럽게 수축하며 톡톡한 볼륨감과 엠보싱 텍스처가 형성됩니다.</p>
+        </div>
+        <div class="ritual-step-card">
+          <div class="step-number-badge">3</div>
+          <h4 class="step-timeline-name">익숙함 (초고속 수분 흡수)</h4>
+          <div class="step-timeline-day">Day 45 (세탁 30회)</div>
+          <p class="step-timeline-desc">물기에 닿자마자 1초 만에 흡수하며, 통기성이 좋아 세균 번식 걱정 없이 쾌적합니다.</p>
+        </div>
+        <div class="ritual-step-card">
+          <div class="step-number-badge">4</div>
+          <h4 class="step-timeline-name">나만의 리추얼 (극상의 부드러움)</h4>
+          <div class="step-timeline-day">Day 90+ (평생의 타월)</div>
+          <p class="step-timeline-desc">깃털보다 가볍고 부드러운 나만의 시그니처 타월 완성. 3년 이상 오래 함께합니다.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       Modals & Drawers
+       ========================================================================== -->
+
+  <!-- M-03 Real-Time Canvas Embroidery Custom Simulator Modal -->
+  <div class="modal-backdrop" id="embroideryModal">
+    <div class="modal-window">
+      <button class="btn-modal-close" onclick="closeEmbroideryModal()">&times;</button>
+      <div class="embroidery-modal-body">
+        
+        <!-- Left: Canvas Rendering Area -->
+        <div class="embroidery-canvas-container">
+          <canvas id="embroideryPreviewCanvas" width="360" height="280"></canvas>
+          <div style="font-size: 11px; color: var(--color-text-muted); margin-top: 12px;">
+            * 플로뜰리에 아틀리에 장인이 1:1 수놓아 완성하는 감성 자수 프리뷰
+          </div>
+        </div>
+
+        <!-- Right: Inputs & Controls -->
+        <div class="embroidery-ctrl-group">
+          <div>
+            <span style="font-size: 11px; letter-spacing: 2px; color: var(--color-accent-terracotta); font-weight: 600;">ATELIER EMBROIDERY STUDIO</span>
+            <h3 class="modal-title-serif" id="embroideryModalProductName">실시간 자수 각인 시뮬레이터</h3>
+          </div>
+
+          <div class="input-field-group">
+            <label class="input-field-label">자수 각인 문구 (최대 10자)</label>
+            <input type="text" id="embroideryTextInput" class="custom-text-input" value="Yeonwoo" maxlength="12" placeholder="영문 또는 한글 이니셜 입력">
+          </div>
+
+          <div class="input-field-group">
+            <label class="input-field-label">실 색상 (Organic Thread Color)</label>
+            <div class="thread-color-picker">
+              <button class="thread-btn active" style="background: #2D4C3E;" data-thread="#2D4C3E" title="포레스트 딥 그린"></button>
+              <button class="thread-btn" style="background: #A35838;" data-thread="#A35838" title="어텀 테라코타"></button>
+              <button class="thread-btn" style="background: #4B5A6A;" data-thread="#4B5A6A" title="미드나잇 슬레이트"></button>
+              <button class="thread-btn" style="background: #938474;" data-thread="#938474" title="앤티크 모카"></button>
+            </div>
+          </div>
+
+          <div class="input-field-group">
+            <label class="input-field-label">서체 스타일 (Typography)</label>
+            <div class="font-select-btn-group">
+              <button class="font-opt-btn active" data-font="Cormorant Garamond, serif">Cormorant (클래식 영문)</button>
+              <button class="font-opt-btn" data-font="Noto Serif KR, serif">바탕 (단아한 한글)</button>
+              <button class="font-opt-btn" data-font="Noto Sans KR, sans-serif">고딕 (모던 미니멀)</button>
+            </div>
+          </div>
+
+          <div style="background: var(--color-bg-surface); padding: 14px; border-radius: 8px; font-size: 12px; color: var(--color-text-sub);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span>자수 각인 공임비</span>
+              <strong>+ 3,000원</strong>
+            </div>
+            <span style="font-size: 11px; color: var(--color-text-muted);">* 장인 수작업으로 제작되어 영업일 기준 1~2일 소요됩니다.</span>
+          </div>
+
+          <button class="btn-add-cart" id="btnAddEmbroideryToCart" style="padding: 12px; font-size: 14px;">
+            자수 옵션 적용하여 장바구니 담기
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- M-02 4차 정련 & KC 4無 안전성 인증서 고화질 뷰어 모달 -->
+  <div class="modal-backdrop" id="certModal">
+    <div class="modal-window" style="max-width: 640px; padding: 36px; text-align: center;">
+      <button class="btn-modal-close" onclick="closeCertModal()">&times;</button>
+      <span style="font-size: 12px; letter-spacing: 2px; color: var(--color-accent-sage); font-weight: 600;">CERTIFIED SAFETY & PURITY</span>
+      <h3 class="modal-title-serif" style="margin: 8px 0 16px 0;">KC 공인 안전 인증 & 4無 시험 성적서</h3>
+      <p style="font-size: 13px; color: var(--color-text-sub); margin-bottom: 24px;">
+        한국의류시험연구원(KATRI) 및 독일 더마테스트(Dermatest) 무자극 최고 등급 Excellent 획득
+      </p>
+
+      <div style="background: #F8FAF9; border: 1px solid var(--color-border); border-radius: 8px; padding: 24px; text-align: left; font-size: 13px; line-height: 2;">
+        <div>🌱 <strong>무형광 (No Optical Brighteners)</strong>: 형광증백제 0.0% 불검출</div>
+        <div>🌱 <strong>무표백 (No Chlorine Bleach)</strong>: 인위적 염소 화학 표백 전면 배제</div>
+        <div>🌱 <strong>무염색 (No Chemical Dyes)</strong>: 자연 목화 고유의 따스한 내추럴 톤</div>
+        <div>🌱 <strong>무향료 (No Synthetic Perfumes)</strong>: 인공 화학 향료 첨가 제로</div>
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--color-border); font-size: 11px; color: var(--color-text-muted);">
+          * KATRI 접수번호: KTR-2026-SOCHANG-44021 | KC 안전확인신고 완료
+        </div>
+      </div>
+
+      <button class="btn-add-cart" style="margin-top: 24px; width: 100%;" onclick="closeCertModal()">
+        확인 완료
+      </button>
+    </div>
+  </div>
+
+  <!-- 1장 체험팩 100% 환급 안내 모달 -->
+  <div class="modal-backdrop" id="trialModal">
+    <div class="modal-window" style="max-width: 580px; padding: 36px; text-align: center;">
+      <button class="btn-modal-close" onclick="closeTrialModal()">&times;</button>
+      <span class="trial-badge" style="display: inline-block; margin-bottom: 12px;">1장 체험팩 100% 환급 시스템</span>
+      <h3 class="modal-title-serif" style="margin-bottom: 12px;">소창의 감동, 3,000원에 먼저 느껴보세요</h3>
+      <p style="font-size: 13px; color: var(--color-text-sub); margin-bottom: 24px; line-height: 1.8;">
+        소창 타월을 처음 접하시거나 촉감이 궁금하신 분들을 위해 준비했습니다.<br>
+        체험팩 배송 후, 플로뜰리에 본품 구매 시 사용할 수 있는 <strong>3,000원 전액 환급 쿠폰</strong>을 알림톡으로 100% 자동 지급해 드립니다.
+      </p>
+
+      <div style="background: var(--color-primary-light); padding: 20px; border-radius: 8px; text-align: left; font-size: 13px; color: var(--color-primary); margin-bottom: 24px;">
+        <strong>[1장 체험팩 구성]</strong><br>
+        · 3겹 시그니처 데일리 소창 타월 1장 (40x80cm, 4차 정련 완료)<br>
+        · 소창 리추얼 세탁 가이드 카드 동봉<br>
+        · 100% 무비닐 에코 페이퍼 패키징 배송
+      </div>
+
+      <button class="btn-add-cart" style="width: 100%; padding: 14px;" onclick="addTrialToCart()">
+        3,000원 체험팩 장바구니 담기
+      </button>
+    </div>
+  </div>
+
+  <!-- Cart Slide Drawer -->
+  <div class="cart-drawer-overlay" id="cartOverlay" onclick="handleCartOverlayClick(event)">
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="cart-header">
+        <h3>장바구니 (<span id="drawerCartCount">0</span>)</h3>
+        <button class="btn-modal-close" style="position: static;" onclick="toggleCartDrawer(false)">&times;</button>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Cart Items Injected by JS -->
+      </div>
+
+      <div class="cart-footer">
+        <div class="eco-pack-option">
+          <input type="checkbox" id="ecoPackCheck" checked>
+          <label for="ecoPackCheck">🌿 100% 무비닐 친환경 재생지 패키징 (무료)</label>
+        </div>
+
+        <div class="cart-summary-row">
+          <span>상품 금액</span>
+          <span id="cartSubtotal">0원</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>배송비</span>
+          <span id="cartShipping">3,000원 (3만원 이상 무료)</span>
+        </div>
+        <div class="cart-total-row">
+          <span>총 결제금액</span>
+          <span id="cartGrandTotal" style="color: var(--color-primary);">0원</span>
+        </div>
+
+        <button class="btn-checkout-npay" onclick="simulateCheckout('NPAY')">
+          <span>N Pay</span> 1초 간편결제
+        </button>
+        <button class="btn-checkout-regular" onclick="simulateCheckout('REGULAR')">
+          주문서 작성하기 &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-alert" id="toastAlert">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#68D391" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMessage">장바구니에 상품이 담겼습니다.</span>
+  </div>
+
+  <!-- ==========================================================================
+       Footer Section
+       ========================================================================== */
+  -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Flottelier 플로뜰리에</div>
+        <p style="margin-bottom: 16px; line-height: 1.8;">
+          시간과 손길이 만드는 고요한 에코 리추얼.<br>
+          4차 전통 가마솥 정련을 거친 100% 강화 순면 소창 라이프스타일 커머스.
+        </p>
+        <p style="font-size: 12px; color: var(--color-text-muted);">
+          브랜드 디렉터: 연우 (웰니스 & 라이프스타일 큐레이터)
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">컬렉션 탐색</h4>
+        <ul class="footer-links">
+          <li><a href="#" onclick="filterByCategory('2LAYER')">2겹 페이스 & 가제</a></li>
+          <li><a href="#" onclick="filterByCategory('3LAYER')">3겹 데일리 시그니처</a></li>
+          <li><a href="#" onclick="filterByCategory('4LAYER')">4겹 프리미엄 바스타월</a></li>
+          <li><a href="#" onclick="filterByCategory('GIFT')">선물 & 자수 답례품 세트</a></li>
+          <li><a href="#" onclick="filterByCategory('CARE')">소창 케어 & 리추얼 도구</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">브랜드 & 안내</h4>
+        <ul class="footer-links">
+          <li><a href="brand.html">브랜드 스토리 (4차 정련 철학)</a></li>
+          <li><a href="index.html#shiroito">소창 길들이기 리추얼 가이드</a></li>
+          <li><a href="사이트맵.html">공식 사이트맵 (Sitemap v2.0)</a></li>
+          <li><a href="#" onclick="openCertModal()">KC 안전 인증서 조회</a></li>
+          <li><a href="#" onclick="openTrialModal()">1장 체험팩 100% 환급 안내</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-heading">성수 아틀리에 팝업</h4>
+        <p style="font-size: 12px; line-height: 1.8; margin-bottom: 12px;">
+          서울시 성동구 연무장길 45 '시간을 짓는 공간'<br>
+          운영시간: 화~일 11:00 - 20:00 (월요일 휴무)
+        </p>
+        <div style="font-size: 12px; color: var(--color-primary); font-weight: 600;">
+          CS 센터: 1544-0824 (09:00~18:00)
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Flottelier (플로뜰리에). All Rights Reserved.</span>
+      <span>무형광 · 무표백 · 무염색 · 무향료 4無 안심 보증</span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JavaScript Logic: Catalog Data, Filters, Real-Time Canvas, Cart Drawer
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. Catalog Products Data (Flottelier Master Lineup)
+       -------------------------------------------------------------------------- */
+    const PRODUCTS_DATA = [
+      {
+        id: "P-0401",
+        category: "3LAYER",
+        personas: ["SENSITIVE", "BABY", "ECO"],
+        color: "IVORY",
+        nameKo: "3겹 시그니처 데일리 소창 타월",
+        nameEn: "3-Layer Daily Signature Ritual Towel",
+        layer: "3겹 · 40x80cm",
+        desc: "가장 균형 잡힌 두께감과 흡수력으로 매일 아침 세안을 리추얼로 바꿔주는 1위 시그니처 타월.",
+        price: 13500,
+        originalPrice: 15000,
+        unitPill: "3장 세트 시 장당 12,000원",
+        rating: 4.98,
+        reviews: 428,
+        badges: [{ text: "4차 정련 완료", type: "badge-refined" }, { text: "BEST 1위", type: "badge-best" }],
+        features: ["KC 4無 인증", "순면 100%", "고리형 마감"],
+        svgColor: "#FAF7F0",
+        texturePattern: "grid-medium"
+      },
+      {
+        id: "P-0402",
+        category: "2LAYER",
+        personas: ["SENSITIVE", "BABY"],
+        color: "IVORY",
+        nameKo: "2겹 순면 가제 페이스 타월",
+        nameEn: "2-Layer Gentle Pure Gauze Face Towel",
+        layer: "2겹 · 35x75cm",
+        desc: "깃털처럼 가볍고 피부 자극 0%. 트러블 피부와 신생아 아기를 위한 극저자극 세안 타월.",
+        price: 9800,
+        originalPrice: 11000,
+        unitPill: "3장 세트 시 장당 8,830원",
+        rating: 4.95,
+        reviews: 215,
+        badges: [{ text: "4차 정련 완료", type: "badge-refined" }, { text: "초저자극", type: "badge-eco" }],
+        features: ["더마테스트 Excellent", "초고속 1초 흡수", "무라벨"],
+        svgColor: "#FCFAF5",
+        texturePattern: "grid-fine"
+      },
+      {
+        id: "P-0403",
+        category: "4LAYER",
+        personas: ["HOTEL", "ECO"],
+        color: "IVORY",
+        nameKo: "4겹 클라우드 바스타월 (대형)",
+        nameEn: "4-Layer Cloud Bath & Body Towel",
+        layer: "4겹 · 68x135cm",
+        desc: "샤워 후 온몸을 감싸는 포근한 볼륨감. 두꺼운 호텔 타월의 답답함 없이 쾌적하게 건조됩니다.",
+        price: 28000,
+        originalPrice: 32000,
+        unitPill: "2장 세트 시 장당 26,000원",
+        rating: 4.97,
+        reviews: 189,
+        badges: [{ text: "4차 정련 완료", type: "badge-refined" }, { text: "도톰 4겹", type: "badge-best" }],
+        features: ["전신 감싸는 대형", "3배 빠른 건조", "먼지 날림 제로"],
+        svgColor: "#F5F2E9",
+        texturePattern: "grid-thick"
+      },
+      {
+        id: "P-0404",
+        category: "2LAYER",
+        personas: ["BABY", "ECO"],
+        color: "IVORY",
+        nameKo: "2겹 무라벨 베이비 와입스 (5장 세트)",
+        nameEn: "Baby Organic Wipes 5-Pack",
+        layer: "2겹 · 25x25cm (5장)",
+        desc: "아기 침받이, 손수건, 세안 후 닦토 패드로 다용도 활용 가능한 무라벨 친환경 순면 와입스.",
+        price: 14000,
+        originalPrice: 16000,
+        unitPill: "장당 2,800원 꼴",
+        rating: 4.99,
+        reviews: 312,
+        badges: [{ text: "4차 정련 완료", type: "badge-refined" }, { text: "맘리뷰 4.99", type: "badge-eco" }],
+        features: ["무형광 순면 100%", "미세 플라스틱 0%", "피부 긁힘 방지"],
+        svgColor: "#FAF8F2",
+        texturePattern: "grid-fine"
+      },
+      {
+        id: "P-0405",
+        category: "3LAYER",
+        personas: ["SENSITIVE", "ECO"],
+        color: "SAGE",
+        nameKo: "3겹 세이지 그린 에디토리얼 타월",
+        nameEn: "3-Layer Organic Sage Edition Towel",
+        layer: "3겹 · 40x80cm",
+        desc: "자연에서 온 은은한 오가닉 세이지 색감. 욕실 인테리어에 감성적인 차분함을 더합니다.",
+        price: 14500,
+        originalPrice: 16500,
+        unitPill: "시즌 리미티드 컬러",
+        rating: 4.94,
+        reviews: 94,
+        badges: [{ text: "시즌 에디션", type: "badge-best" }, { text: "식물염색", type: "badge-eco" }],
+        features: ["천연 쑥/세이지 염색", "소량 한정 제작", "고리형 마감"],
+        svgColor: "#E6ECE8",
+        texturePattern: "grid-medium"
+      },
+      {
+        id: "P-0406",
+        category: "4LAYER",
+        personas: ["SENSITIVE", "HOTEL"],
+        color: "TERRACOTTA",
+        nameKo: "4겹 롱타월 헤어 드라이 전용",
+        nameEn: "4-Layer Hair Quick-Dry Long Towel",
+        layer: "4겹 · 30x90cm",
+        desc: "머리를 감싸기 완벽한 롱 비율. 모발 손상 없이 드라이기 사용 시간을 50% 줄여줍니다.",
+        price: 16500,
+        originalPrice: 19000,
+        unitPill: "헤어 손상 방지 퀵드라이",
+        rating: 4.96,
+        reviews: 142,
+        badges: [{ text: "4차 정련 완료", type: "badge-refined" }],
+        features: ["헤어 드라이 최적화", "강력한 흡수력", "단추 고정 스트랩"],
+        svgColor: "#EFE6E0",
+        texturePattern: "grid-thick"
+      },
+      {
+        id: "P-0407",
+        category: "GIFT",
+        personas: ["GIFT", "SENSITIVE", "ECO"],
+        color: "IVORY",
+        nameKo: "[시그니처 기프트] 플로뜰리에 4종 선물세트",
+        nameEn: "Flottelier Signature Ritual Gift Set",
+        layer: "3겹 2장 + 2겹 1장 + 리추얼 비누",
+        desc: "집들이, 웨딩, 생일 축하를 위한 베스트셀러. 자수 각인, 웰컴 카드, 무비닐 패브릭 포장 포함.",
+        price: 42000,
+        originalPrice: 48000,
+        unitPill: "자수 각인 & 선물포장 포함",
+        rating: 5.0,
+        reviews: 268,
+        badges: [{ text: "선물 1위", type: "badge-best" }, { text: "무비닐 포장", type: "badge-eco" }],
+        features: ["이니셜 자수 무료", "메시지 카드 동봉", "가격표 미표기 배송"],
+        svgColor: "#FAF7F2",
+        texturePattern: "grid-gift"
+      },
+      {
+        id: "P-0408",
+        category: "GIFT",
+        personas: ["BABY", "GIFT"],
+        color: "IVORY",
+        nameKo: "[출산 축하] 베이비 퓨어 오가닉 세트",
+        nameEn: "Baby Pure Organic Newborn Gift Set",
+        layer: "2겹 가제 3장 + 와입스 5장 + 턱받이",
+        desc: "소중한 아기의 첫 피부를 위한 4차 정련 완제품 출산 세트. 삶을 필요 없어 엄마에게 감동을 줍니다.",
+        price: 38000,
+        originalPrice: 44000,
+        unitPill: "출산선물 만족도 99%",
+        rating: 4.99,
+        reviews: 176,
+        badges: [{ text: "출산선물 1위", type: "badge-best" }, { text: "4無 인증", type: "badge-eco" }],
+        features: ["아기 이름 자수 가능", "친환경 패키징", "KC 안전인증"],
+        svgColor: "#FAF9F5",
+        texturePattern: "grid-gift"
+      },
+      {
+        id: "P-0409",
+        category: "GIFT",
+        personas: ["GIFT", "ECO"],
+        color: "IVORY",
+        nameKo: "[단체/돌답례품] 커스텀 자수 타월 10세트~",
+        nameEn: "Custom Atelier Embroidery Event Set (10+)",
+        layer: "3겹 데일리 (수량별 자동할인)",
+        desc: "돌잔치, 기업 답례품, 웨딩 행사용. 원하는 로고/문구를 자수로 수놓아 고급스럽게 전합니다.",
+        price: 11500,
+        originalPrice: 13500,
+        unitPill: "수량별 최대 30% 할인",
+        rating: 4.97,
+        reviews: 83,
+        badges: [{ text: "답례품 전용", type: "badge-best" }],
+        features: ["개별 선물박스 포장", "시안 무료 확인", "대량 납기 보증"],
+        svgColor: "#F7F5EE",
+        texturePattern: "grid-gift"
+      },
+      {
+        id: "P-0410",
+        category: "CARE",
+        personas: ["ECO"],
+        color: "IVORY",
+        nameKo: "오가닉 순면 세탁망 3종 세트",
+        nameEn: "100% Organic Cotton Laundry Bag 3-Set",
+        layer: "소/중/대 3종 구성",
+        desc: "미세플라스틱을 전혀 배출하지 않는 무형광 100% 오가닉 순면 세탁망. 소창 수명을 3년 이상 지켜줍니다.",
+        price: 12000,
+        originalPrice: 14000,
+        unitPill: "미세플라스틱 0%",
+        rating: 4.93,
+        reviews: 64,
+        badges: [{ text: "친환경 케어", type: "badge-eco" }],
+        features: ["순면 100% 직조", "지퍼 긁힘 방지 커버", "오래 쓰는 견고함"],
+        svgColor: "#F4F6F5",
+        texturePattern: "grid-fine"
+      },
+      {
+        id: "P-0411",
+        category: "CARE",
+        personas: ["SENSITIVE", "ECO"],
+        color: "IVORY",
+        nameKo: "천연 EM 소창 전용 퓨어 세탁비누 (2개입)",
+        nameEn: "Natural EM Pure Fabric Soap (2-Pack)",
+        layer: "150g x 2개",
+        desc: "코코넛 오일과 EM 유용미생물로 찌든 때를 순하게 분해하는 저자극 고체 세탁비누.",
+        price: 8500,
+        originalPrice: 10000,
+        unitPill: "개당 4,250원 꼴",
+        rating: 4.96,
+        reviews: 91,
+        badges: [{ text: "저자극 세탁", type: "badge-eco" }],
+        features: ["합성 계면활성제 0%", "물 맑음 생분해", "손세탁 안심"],
+        svgColor: "#FAF8F0",
+        texturePattern: "grid-medium"
+      },
+      {
+        id: "P-0412",
+        category: "CARE",
+        personas: ["SENSITIVE", "HOTEL"],
+        color: "SAGE",
+        nameKo: "시더우드 & 세이지 패브릭 리추얼 미스트 (100ml)",
+        nameEn: "Cedarwood & Sage Fabric Ritual Mist",
+        layer: "100ml 유리 보틀",
+        desc: "소창 타월에 은은하고 맑은 숲의 향기를 더해주는 천연 에센셜 오일 블렌딩 패브릭 미스트.",
+        price: 19000,
+        originalPrice: 22000,
+        unitPill: "천연 에센셜 100%",
+        rating: 4.91,
+        reviews: 48,
+        badges: [{ text: "아로마 리추얼", type: "badge-best" }],
+        features: ["알레르기 프리 천연향", "섬유 탈취 99%", "유리 용기"],
+        svgColor: "#EAEFEA",
+        texturePattern: "grid-fine"
+      }
+    ];
+
+    /* --------------------------------------------------------------------------
+       2. State Management
+       -------------------------------------------------------------------------- */
+    let currentCategory = "ALL";
+    let currentPersona = "ALL";
+    let currentColor = "ALL";
+    let currentSort = "RECOMMEND";
+    let currentKeyword = "";
+    let cartItems = [];
+    let activeEmbroideryProduct = null;
+
+    // Selected Embroidery Options
+    let selectedThreadColor = "#2D4C3E";
+    let selectedFont = "Cormorant Garamond, serif";
+
+    /* --------------------------------------------------------------------------
+       3. Initialization
+       -------------------------------------------------------------------------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      initWatercolorCanvas();
+      renderProductGrid();
+      bindFilterEvents();
+      initEmbroideryCanvas();
+    });
+
+    /* --------------------------------------------------------------------------
+       4. Product Grid Rendering & Filtering Logic
+       -------------------------------------------------------------------------- */
+    function getFilteredProducts() {
+      return PRODUCTS_DATA.filter(item => {
+        // Category Filter
+        if (currentCategory !== "ALL" && item.category !== currentCategory) return false;
+        // Persona Filter
+        if (currentPersona !== "ALL" && !item.personas.includes(currentPersona)) return false;
+        // Color Filter
+        if (currentColor !== "ALL" && item.color !== currentColor) return false;
+        // Keyword Search Filter
+        if (currentKeyword.trim() !== "") {
+          const query = currentKeyword.trim().toLowerCase();
+          const matchNameKo = item.nameKo.toLowerCase().includes(query);
+          const matchNameEn = item.nameEn.toLowerCase().includes(query);
+          const matchLayer = item.layer.toLowerCase().includes(query);
+          const matchDesc = item.desc.toLowerCase().includes(query);
+          if (!matchNameKo && !matchNameEn && !matchLayer && !matchDesc) return false;
+        }
+        return true;
+      }).sort((a, b) => {
+        if (currentSort === "PRICE_LOW") return a.price - b.price;
+        if (currentSort === "PRICE_HIGH") return b.price - a.price;
+        if (currentSort === "RATING") return b.rating - a.rating;
+        if (currentSort === "POPULAR") return b.reviews - a.reviews;
+        return 0; // Default RECOMMEND
+      });
+    }
+
+    function renderProductGrid() {
+      const grid = document.getElementById("productGrid");
+      const emptyState = document.getElementById("emptyState");
+      const totalCountSpan = document.getElementById("productTotalCount");
+      const resetBtn = document.getElementById("resetFilterBtn");
+
+      const filtered = getFilteredProducts();
+      totalCountSpan.textContent = filtered.length;
+
+      // Toggle Reset Button
+      const isFiltered = (currentCategory !== "ALL" || currentPersona !== "ALL" || currentColor !== "ALL" || currentKeyword !== "");
+      resetBtn.style.display = isFiltered ? "inline-block" : "none";
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      emptyState.style.display = "none";
+      grid.innerHTML = filtered.map(item => createProductCardHtml(item)).join("");
+    }
+
+    function createProductCardHtml(item) {
+      const badgeHtml = item.badges.map(b => `<span class="card-badge ${b.type}">${b.text}</span>`).join("");
+      const featureHtml = item.features.map(f => `<span class="feature-chip">${f}</span>`).join("");
+
+      return `
+        <div class="product-card" id="card-${item.id}">
+          <div class="product-visual-wrap" style="background: ${item.svgColor};">
+            <div class="product-badge-group">
+              ${badgeHtml}
+            </div>
+
+            <!-- SVG Fabric Illustration Simulation -->
+            <svg class="product-img-canvas" viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="300" height="240" fill="${item.svgColor}" />
+              <!-- Sochang Gauze Grid Texture Lines -->
+              <defs>
+                <pattern id="grid-${item.id}" width="16" height="16" patternUnits="userSpaceOnUse">
+                  <path d="M 16 0 L 0 0 0 16" fill="none" stroke="rgba(180, 195, 190, 0.25)" stroke-width="0.75"/>
+                </pattern>
+              </defs>
+              <rect width="300" height="240" fill="url(#grid-${item.id})" />
+              
+              <!-- Folded Towel Organic Shadow & Outline -->
+              <rect x="40" y="45" width="220" height="150" rx="8" fill="#FFFFFF" fill-opacity="0.85" stroke="rgba(210, 220, 218, 0.8)" stroke-width="1.5" />
+              <rect x="55" y="60" width="190" height="120" rx="6" fill="#FFFFFF" fill-opacity="0.95" stroke="rgba(220, 228, 225, 0.6)" stroke-width="1" />
+              
+              <!-- Refined Stitching Line Detail -->
+              <line x1="55" y1="65" x2="245" y2="65" stroke="rgba(196, 122, 90, 0.5)" stroke-width="1" stroke-dasharray="3,3" />
+              <line x1="55" y1="175" x2="245" y2="175" stroke="rgba(196, 122, 90, 0.5)" stroke-width="1" stroke-dasharray="3,3" />
+
+              <!-- Brand Atelier Text on Fabric -->
+              <text x="150" y="125" text-anchor="middle" font-family="'Noto Serif KR', serif" font-size="14" fill="#232527" letter-spacing="1">
+                Flottelier
+              </text>
+              <text x="150" y="142" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="10" fill="#7E8D7F" letter-spacing="2">
+                4-REFINED SOCHANG
+              </text>
+            </svg>
+
+            <!-- Hover Quick Action -->
+            <div class="product-hover-overlay">
+              <button class="btn-quick-preview" onclick="openEmbroideryModal('${item.id}')">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                <span>자수 프리뷰</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="product-info-area">
+            <div class="product-layer-tag">${item.layer}</div>
+            <h3 class="product-name-ko">${item.nameKo}</h3>
+            <div class="product-name-en">${item.nameEn}</div>
+            
+            <div class="card-rating-row">
+              <span class="rating-stars">★★★★★</span>
+              <span class="rating-score">${item.rating}</span>
+              <span>(${item.reviews})</span>
+            </div>
+
+            <div class="product-features-row">
+              ${featureHtml}
+            </div>
+
+            <div class="product-pricing-box">
+              <div class="price-main-wrap">
+                <span class="unit-calc-pill">${item.unitPill}</span>
+                <div>
+                  <span class="price-amount">${item.price.toLocaleString()}</span>
+                  <span class="price-currency">원</span>
+                  <span class="original-price">${item.originalPrice.toLocaleString()}원</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-actions-row">
+              <button class="btn-add-cart" onclick="addToCart('${item.id}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>장바구니</span>
+              </button>
+              <button class="btn-embroidery-mini" onclick="openEmbroideryModal('${item.id}')">
+                자수 커스텀
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* --------------------------------------------------------------------------
+       5. Filter & Event Bindings
+       -------------------------------------------------------------------------- */
+    function bindFilterEvents() {
+      // Category Tab Buttons
+      const tabBtns = document.querySelectorAll(".category-tab-btn");
+      tabBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentCategory = btn.getAttribute("data-category");
+          renderProductGrid();
+        });
+      });
+
+      // Persona Tag Buttons
+      const personaBtns = document.querySelectorAll(".persona-tag-btn");
+      personaBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          personaBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentPersona = btn.getAttribute("data-persona");
+          renderProductGrid();
+        });
+      });
+
+      // Color Swatches
+      const colorDots = document.querySelectorAll(".color-swatch-dot");
+      colorDots.forEach(dot => {
+        dot.addEventListener("click", () => {
+          colorDots.forEach(d => d.classList.remove("active"));
+          dot.classList.add("active");
+          currentColor = dot.getAttribute("data-color");
+          renderProductGrid();
+        });
+      });
+
+      // Search Input (Real-Time Debounce)
+      const searchInput = document.getElementById("keywordSearchInput");
+      let searchTimeout;
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentKeyword = e.target.value;
+          renderProductGrid();
+        }, 150);
+      });
+
+      // Sort Select
+      const sortSelect = document.getElementById("sortSelect");
+      sortSelect.addEventListener("change", (e) => {
+        currentSort = e.target.value;
+        renderProductGrid();
+      });
+    }
+
+    function filterByCategory(cat) {
+      currentCategory = cat;
+      const tabBtns = document.querySelectorAll(".category-tab-btn");
+      tabBtns.forEach(b => {
+        if (b.getAttribute("data-category") === cat) b.classList.add("active");
+        else b.classList.remove("active");
+      });
+      renderProductGrid();
+      window.scrollTo({ top: 380, behavior: "smooth" });
+    }
+
+    function resetAllFilters() {
+      currentCategory = "ALL";
+      currentPersona = "ALL";
+      currentColor = "ALL";
+      currentSort = "RECOMMEND";
+      currentKeyword = "";
+      document.getElementById("keywordSearchInput").value = "";
+      document.getElementById("sortSelect").value = "RECOMMEND";
+
+      document.querySelectorAll(".category-tab-btn").forEach(b => {
+        if (b.getAttribute("data-category") === "ALL") b.classList.add("active");
+        else b.classList.remove("active");
+      });
+      document.querySelectorAll(".persona-tag-btn").forEach(b => {
+        if (b.getAttribute("data-persona") === "ALL") b.classList.add("active");
+        else b.classList.remove("active");
+      });
+      document.querySelectorAll(".color-swatch-dot").forEach(d => {
+        if (d.getAttribute("data-color") === "ALL") d.classList.add("active");
+        else d.classList.remove("active");
+      });
+
+      renderProductGrid();
+    }
+
+    /* --------------------------------------------------------------------------
+       6. Cart Drawer & Calculations
+       -------------------------------------------------------------------------- */
+    function addToCart(productId, customOptions = null) {
+      const product = PRODUCTS_DATA.find(p => p.id === productId);
+      if (!product) return;
+
+      const itemKey = customOptions ? `${productId}-${customOptions.text}-${customOptions.thread}` : productId;
+      const existing = cartItems.find(item => item.key === itemKey);
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        const itemPrice = customOptions ? product.price + 3000 : product.price;
+        cartItems.push({
+          key: itemKey,
+          id: product.id,
+          nameKo: product.nameKo,
+          layer: product.layer,
+          price: itemPrice,
+          qty: 1,
+          custom: customOptions
+        });
+      }
+
+      updateCartUi();
+      showToast(`'${product.nameKo}' 상품이 장바구니에 담겼습니다.`);
+      toggleCartDrawer(true);
+    }
+
+    function addTrialToCart() {
+      closeTrialModal();
+      const trialItemKey = "TRIAL-01";
+      const existing = cartItems.find(item => item.key === trialItemKey);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cartItems.push({
+          key: trialItemKey,
+          id: "TRIAL-01",
+          nameKo: "[1장 체험팩 100% 환급] 3겹 데일리 타월 1장",
+          layer: "3겹 · 40x80cm · 환급쿠폰 100% 동봉",
+          price: 3000,
+          qty: 1,
+          custom: null
+        });
+      }
+      updateCartUi();
+      showToast("1장 체험팩(3,000원)이 장바구니에 담겼습니다.");
+      toggleCartDrawer(true);
+    }
+
+    function updateCartItemQty(key, delta) {
+      const item = cartItems.find(i => i.key === key);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cartItems = cartItems.filter(i => i.key !== key);
+      }
+      updateCartUi();
+    }
+
+    function removeCartItem(key) {
+      cartItems = cartItems.filter(i => i.key !== key);
+      updateCartUi();
+    }
+
+    function updateCartUi() {
+      const totalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+      document.getElementById("headerCartCount").textContent = totalQty;
+      document.getElementById("drawerCartCount").textContent = totalQty;
+
+      const list = document.getElementById("cartItemsList");
+      if (cartItems.length === 0) {
+        list.innerHTML = `
+          <div style="text-align: center; padding: 60px 0; color: var(--color-text-muted);">
+            <div style="font-size: 32px; margin-bottom: 12px;">🧺</div>
+            <p style="font-size: 14px;">장바구니가 비어 있습니다.</p>
+            <p style="font-size: 12px; margin-top: 4px;">4차 정련 소창 컬렉션을 담아보세요.</p>
+          </div>
+        `;
+        document.getElementById("cartSubtotal").textContent = "0원";
+        document.getElementById("cartGrandTotal").textContent = "0원";
+        return;
+      }
+
+      list.innerHTML = cartItems.map(item => `
+        <div class="cart-item-card">
+          <div class="cart-item-thumb">
+            소창순면
+          </div>
+          <div class="cart-item-info">
+            <div class="cart-item-title">${item.nameKo}</div>
+            <div class="cart-item-sub">${item.layer}${item.custom ? ` · 자수 [${item.custom.text}]` : ''}</div>
+            <div class="cart-qty-ctrl">
+              <button class="qty-btn" onclick="updateCartItemQty('${item.key}', -1)">-</button>
+              <span style="font-size: 12px; font-weight: 600; min-width: 18px; text-align: center;">${item.qty}</span>
+              <button class="qty-btn" onclick="updateCartItemQty('${item.key}', 1)">+</button>
+            </div>
+          </div>
+          <div>
+            <div class="cart-item-price">${(item.price * item.qty).toLocaleString()}원</div>
+            <span class="btn-remove-item" onclick="removeCartItem('${item.key}')">삭제</span>
+          </div>
+        </div>
+      `).join("");
+
+      const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+      const shipping = (subtotal >= 30000 || subtotal === 0) ? 0 : 3000;
+      const grandTotal = subtotal + shipping;
+
+      document.getElementById("cartSubtotal").textContent = `${subtotal.toLocaleString()}원`;
+      document.getElementById("cartShipping").textContent = shipping === 0 ? "무료배송" : "3,000원 (3만원 이상 무료)";
+      document.getElementById("cartGrandTotal").textContent = `${grandTotal.toLocaleString()}원`;
+    }
+
+    function toggleCartDrawer(open) {
+      const overlay = document.getElementById("cartOverlay");
+      if (open) overlay.classList.add("active");
+      else overlay.classList.remove("active");
+    }
+
+    function handleCartOverlayClick(e) {
+      if (e.target.id === "cartOverlay") {
+        toggleCartDrawer(false);
+      }
+    }
+
+    function simulateCheckout(type) {
+      if (cartItems.length === 0) {
+        alert("장바구니에 담긴 상품이 없습니다.");
+        return;
+      }
+      const payName = type === 'NPAY' ? '네이버페이 1초 간편결제' : '일반 결제';
+      showToast(`${payName} 화면으로 안전하게 연결됩니다.`);
+    }
+
+    /* --------------------------------------------------------------------------
+       7. M-03 Real-Time Canvas Embroidery Simulator
+       -------------------------------------------------------------------------- */
+    function initEmbroideryCanvas() {
+      const textInput = document.getElementById("embroideryTextInput");
+      const threadBtns = document.querySelectorAll(".thread-btn");
+      const fontBtns = document.querySelectorAll(".font-opt-btn");
+      const btnAddEmb = document.getElementById("btnAddEmbroideryToCart");
+
+      textInput.addEventListener("input", drawEmbroideryCanvas);
+
+      threadBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          threadBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedThreadColor = btn.getAttribute("data-thread");
+          drawEmbroideryCanvas();
+        });
+      });
+
+      fontBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          fontBtns.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedFont = btn.getAttribute("data-font");
+          drawEmbroideryCanvas();
+        });
+      });
+
+      btnAddEmb.addEventListener("click", () => {
+        if (!activeEmbroideryProduct) return;
+        const customText = textInput.value.trim() || "Flottelier";
+        addToCart(activeEmbroideryProduct.id, {
+          text: customText,
+          thread: selectedThreadColor,
+          font: selectedFont
+        });
+        closeEmbroideryModal();
+      });
+    }
+
+    function openEmbroideryModal(productId) {
+      const product = PRODUCTS_DATA.find(p => p.id === productId);
+      if (!product) return;
+      activeEmbroideryProduct = product;
+      document.getElementById("embroideryModalProductName").textContent = `${product.nameKo} 자수 커스텀`;
+      document.getElementById("embroideryModal").classList.add("active");
+      drawEmbroideryCanvas();
+    }
+
+    function closeEmbroideryModal() {
+      document.getElementById("embroideryModal").classList.remove("active");
+    }
+
+    function drawEmbroideryCanvas() {
+      const canvas = document.getElementById("embroideryPreviewCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const text = document.getElementById("embroideryTextInput").value.trim() || "Yeonwoo";
+
+      // 1. Clear & Background Fabric Tone
+      ctx.fillStyle = "#FAF7F2";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. Micro Sochang Texture Weave Simulation
+      ctx.strokeStyle = "rgba(215, 222, 218, 0.4)";
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < canvas.width; x += 6) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 6) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // 3. Delicate Fabric Hemming / Border
+      ctx.strokeStyle = "rgba(196, 122, 90, 0.4)";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+      ctx.setLineDash([]);
+
+      // 4. Thread Embroidery Text Rendering
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = `italic 600 28px ${selectedFont}`;
+
+      // Thread Shadow (Embroidery Depth Effect)
+      ctx.shadowColor = "rgba(0, 0, 0, 0.15)";
+      ctx.shadowBlur = 3;
+      ctx.shadowOffsetX = 1;
+      ctx.shadowOffsetY = 1.5;
+
+      ctx.fillStyle = selectedThreadColor;
+      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+      // Reset Shadow
+      ctx.shadowColor = "transparent";
+
+      // Subtle Decorative Subtext
+      ctx.font = "400 10px 'Noto Sans KR', sans-serif";
+      ctx.fillStyle = "#8E949A";
+      ctx.fillText("FLOTTELLIER ECO ATELIER 2026", canvas.width / 2, canvas.height / 2 + 34);
+    }
+
+    /* --------------------------------------------------------------------------
+       8. Modals (Cert & Trial)
+       -------------------------------------------------------------------------- */
+    function openCertModal() {
+      document.getElementById("certModal").classList.add("active");
+    }
+    function closeCertModal() {
+      document.getElementById("certModal").classList.remove("active");
+    }
+
+    function openTrialModal() {
+      document.getElementById("trialModal").classList.add("active");
+    }
+    function closeTrialModal() {
+      document.getElementById("trialModal").classList.remove("active");
+    }
+
+    /* --------------------------------------------------------------------------
+       9. Toast Alert
+       -------------------------------------------------------------------------- */
+    let toastTimeout;
+    function showToast(msg) {
+      const toast = document.getElementById("toastAlert");
+      const msgSpan = document.getElementById("toastMessage");
+      msgSpan.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    /* --------------------------------------------------------------------------
+       10. Slow & Smooth Watercolor Canvas Background Effect
+       -------------------------------------------------------------------------- */
+    function initWatercolorCanvas() {
+      const canvas = document.getElementById("watercolorCanvas");
+      const ctx = canvas.getContext("2d");
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener("resize", () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const droplets = [];
+      const palette = [
+        "rgba(215, 240, 242, ", // Mist Aqua
+        "rgba(230, 245, 238, ", // Soft Mint
+        "rgba(236, 228, 245, ", // Pale Lavender
+        "rgba(248, 230, 238, "  // Petal Rose
+      ];
+
+      class WatercolorDrop {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.radius = 4;
+          this.maxRadius = Math.random() * 80 + 60;
+          this.growthRate = 0.4;
+          this.colorBase = palette[Math.floor(Math.random() * palette.length)];
+          this.alpha = 0.22;
+          this.fadeRate = 0.001;
+        }
+        update() {
+          if (this.radius < this.maxRadius) {
+            this.radius += this.growthRate;
+          }
+          this.alpha -= this.fadeRate;
+        }
+        draw() {
+          if (this.alpha <= 0) return;
+          const grad = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, this.radius
+          );
+          grad.addColorStop(0, this.colorBase + this.alpha + ")");
+          grad.addColorStop(0.6, this.colorBase + (this.alpha * 0.4) + ")");
+          grad.addColorStop(1, this.colorBase + "0)");
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Subtle mouse interaction
+      let lastMove = 0;
+      window.addEventListener("mousemove", (e) => {
+        const now = Date.now();
+        if (now - lastMove > 120 && droplets.length < 25) {
+          droplets.push(new WatercolorDrop(e.clientX, e.clientY));
+          lastMove = now;
+        }
+      });
+
+      // Auto ambient droplets
+      setInterval(() => {
+        if (droplets.length < 15) {
+          const rx = Math.random() * width;
+          const ry = Math.random() * height;
+          droplets.push(new WatercolorDrop(rx, ry));
+        }
+      }, 2500);
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = droplets.length - 1; i >= 0; i--) {
+          droplets[i].update();
+          droplets[i].draw();
+          if (droplets[i].alpha <= 0) {
+            droplets.splice(i, 1);
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+flowchart TD
+  %% 시작 노드
+  Start([1. 웹사이트 진입]):::startend --> P01[P-01 메인페이지]:::screen
+
+  %% 탐색 및 검증 단계
+  P01 --> BranchTrust{4차 정련 & 가이드 확인?}:::decision
+  BranchTrust -- "공정/안전성 확인" --> P02[P-02 4차 정련 스토리]:::screen
+  BranchTrust -- "수축/규격 가이드" --> P03[P-03 소창 길들이기/수축 가이드]:::screen
+  BranchTrust -- "1장 소량 체험" --> P06[P-06 1장 체험팩 100% 환급]:::screen
+  BranchTrust -- "바로 쇼핑" --> P04[P-04 전체 상품 카탈로그]:::screen
+
+  P02 --> M02[M-02 KC 안전성 인증서 모달]:::modal
+  M02 --> P04
+  P03 --> P04
+  P06 --> P05[P-05 상품 상세 페이지]:::screen
+
+  %% 상품 선택 및 검색
+  P04 --> BranchSearch{상품 검색/필터 결과?}:::decision
+  BranchSearch -- "결과 있음" --> P05
+  BranchSearch -- "결과 없음 / 품절" --> EX01[EX-01 결과 없음 / 대체 상품 안내]:::exception
+  EX01 --> P04
+
+  %% 상품 상세 인터랙션
+  P05 --> ActionDetail[/500% HD 확대 줌 & 수축 슬라이더 조작/]:::userAction
+  ActionDetail --> BranchCustom{자수 커스텀 적용 여부?}:::decision
+
+  BranchCustom -- "자수 추가" --> M03[M-03 실시간 자수 프리뷰 / P-07]:::modal
+  BranchCustom -- "기본 구매" --> BranchGift{선물 포장 선택?}:::decision
+
+  %% 자수 유효성 검사
+  M03 --> ActionInput[/자수 문구 및 실 색상 입력/]:::userAction
+  ActionInput --> ValidateText{문구 길이 유효성 검사 (1~15자)}:::decision
+  ValidateText -- "15자 초과 / 오류" --> ErrMsg[시스템: 자수 문구 초과 오류 표시]:::exception
+  ErrMsg --> M03
+  ValidateText -- "유효성 통과" --> SysCanvas[시스템: Canvas 실시간 자수 렌더링]:::systemProc
+  SysCanvas --> BranchGift
+
+  %% 선물 포장
+  BranchGift -- "선물 포장 추가" --> M01[M-01 선물 포장 & 메시지 모달]:::modal
+  BranchGift -- "일반 무비닐 배송" --> P11[P-11 장바구니 & 결제]:::screen
+  M01 --> P11
+
+  %% 결제 및 로그인 분기
+  P11 --> BranchLogin{로그인 상태 확인}:::decision
+  BranchLogin -- "비회원" --> GuestModal[비회원 구매 / SNS 1초 로그인 선택]:::modal
+  GuestModal --> P11
+  BranchLogin -- "회원 로그인 완료" --> ActionPay[/N Pay / 간편결제 1초 승인/]:::userAction
+
+  ActionPay --> SysOrder[시스템: 주문 완료 처리 & 자수 템플릿 저장]:::systemProc
+  SysOrder --> P12[P-12 마이페이지 주문 완료 & 알림톡 발송]:::screen
+
+  %% 사후 여정
+  P12 --> BranchPost{사후 서비스 여정}:::decision
+  BranchPost -- "피부 미맞춤" --> PostRefund[P-10 안심 환불 100% 무료 수거]:::screen
+  BranchPost -- "동일 옵션 재주문" --> PostReorder[P-12 1-Click 재주문 버튼]:::screen
+  PostRefund --> EndRefund([환불 완료]):::startend
+  PostReorder --> P11
+  P12 --> EndSuccess([구매 여정 성공 종료]):::startend
+
+  %% 잘못된 경로
+  P01 -.-> EX02[EX-02 404 Not Found]:::exception
+  EX02 -.-> P01
+
+  %% 스타일 정의
+  classDef startend fill:#1A3B34,stroke:#132B26,stroke-width:2px,color:#FFFFFF;
+  classDef screen fill:#E8F3F1,stroke:#4A7C72,stroke-width:1.5px,color:#1A3B34;
+  classDef userAction fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px,color:#166534;
+  classDef systemProc fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px,color:#1E40AF;
+  classDef decision fill:#FEF3C7,stroke:#D97706,stroke-width:1.5px,color:#92400E;
+  classDef modal fill:#FFF6ED,stroke:#EA580C,stroke-width:1.5px,color:#9A3412;
+  classDef exception fill:#FEE2E2,stroke:#EF4444,stroke-width:1.5px,stroke-dasharray:3 3,color:#991B1B;
