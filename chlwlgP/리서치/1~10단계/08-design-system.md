@@ -42,3 +42,11 @@
 2. **Badge**: 4차 정련 Completed 보증 뱃지, 4無 안전성 뱃지, 100% 국산 뱃지
 3. **Card**: 80% 여백 비대칭 에디토리얼 카드, 겹수별 용도 비교 카드
 4. **Form Controls**: Canvas 자수 폰트/실색상 Picker, 팝업 타임슬롯 픽커 버튼
+
+---
+
+## 3. 600선 확장 컴포넌트 시스템 (신규 추가)
+5. **Toast (알림)**: [Sonner](https://sonner.emilkowal.ski) 기반 스택형 토스트 알림 컴포넌트
+6. **Drawer (바텀시트)**: [Vaul](https://vaul.emilkowal.ski) 기반 제스처 반응형 모바일 시트 컴포넌트
+7. **Bento Card**: [Bento Grids](https://bentogrids.com) 기반 4대 USP 모듈형 그리드 카드
+8. **Magnetic Button**: [Dennis Snellenberg](https://dennissnellenberg.com) 벤치마크 자석 호버 버튼

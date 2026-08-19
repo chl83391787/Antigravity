@@ -56,3 +56,22 @@
 | **P-09** | GIFT 커스텀 | Casetify + Buly | 자수 폰트/실 색상 합성, 고급 선물 포장 샷 |
 | **P-10** | COMMUNITY | Glossier + Bamboobies | 맘리뷰/피부타입 3중 필터, 안심 환불 정책 |
 | **P-11** | MYPAGE | Dollar Shave Club | 1-Click 동일 조건 재구매 버튼 |
+
+---
+
+## 3. 600선 확장 레퍼런스 정밀 분석 (신규 추가)
+
+### 3.1 Micro-Interactions & Toasts: `Paco Coursey` + `Sonner`
+* **What works**: 장바구니 담기, 예약 완료 시 부드럽게 겹쳐서 떠오르는 스택형 토스트 알림과 햅틱 사운드 피드백.
+* **Apply to Flottelier**: 1장 체험팩 신청 완료, 자수 각인 복사, 장바구니 추가 시 상단 우측에 Sonner 스타일의 미니멀 토스트 노출.
+* **UX Rule**: 토스트 알림은 3초 후 자연스럽게 fade out 되며, 화면의 중요 CTA 버튼을 가리지 않도록 위치 고정.
+
+### 3.2 High-definition Macro Zoom: `Bottega Veneta` + `Hardgraft`
+* **What works**: 마우스 호버 시 원단의 씨실과 날실, 올의 결을 초고해상도로 확대하여 보여주는 500% 매크로 렌즈.
+* **Apply to Flottelier**: P-07 상품 상세 페이지에서 4차 정련 소창의 부드러운 올 조직을 500% 확대경으로 실시간 검증할 수 있도록 구현.
+* **UX Rule**: 고해상도 이미지는 인터랙션 발생 시 지연 로딩(Lazy loading)하여 초기 페이지 로딩 속도를 저해하지 않음.
+
+### 3.3 Mobile Bottom Sheet: `Vaul Drawer` + `SSENSE`
+* **What works**: 모바일 환경에서 복잡한 필터 및 옵션 선택을 페이지 이동 없이 화면 하단에서 스와이프로 끌어올려 제어.
+* **Apply to Flottelier**: P-05 카탈로그의 겹수/용도 필터 및 P-07 모바일 옵션 픽커를 iOS 제스처 호환 Vaul 스타일 바텀 시트로 제공.
+* **UX Rule**: 아래로 스와이프 시 0.2초 만에 부드럽게 닫히며 뒷배경 스크롤 방지(Scroll Lock) 처리.

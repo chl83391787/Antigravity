@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>플로뜰리에 (Flottelier) | 4차 정련 순면 소창 에코 리추얼</title>
+  <meta name="description" content="삶을 필요 없이 바로 쓰는 4차 정련 완료 100% 국산 순면 소창 타월. 실시간 자수 각인 아틀리에 및 1장 안심 체험팩.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. 디자인 토큰 (Design Tokens - 600선 기준 체계화)
+       ========================================================================== */
+    :root {
+      --color-bg-main: #FAFDFD;
+      --color-bg-surface: #F7F5F0;
+      --color-bg-card: rgba(255, 255, 255, 0.94);
+      --color-primary: #1A3B34;          /* Deep Forest Pine */
+      --color-primary-light: #E8F3F1;    /* Mist Sage Tint */
+      --color-accent-aqua: #A8C5C6;      /* Soft Aqua Wave */
+      --color-accent-sage: #7E8D7F;      /* Soft Organic Sage */
+      --color-accent-terracotta: #C47A5A;/* Warm Natural Terracotta */
+      --color-accent-gold: #D97706;      /* Vintage Ochre Gold */
+      --color-text-main: #232527;        /* Charcoal Black */
+      --color-text-sub: #555B60;         /* Slate Grey */
+      --color-text-muted: #8E949A;       /* Soft Muted Grey */
+      --color-border: rgba(220, 228, 226, 0.85);
+      --color-border-light: rgba(235, 240, 238, 0.9);
+      
+      --font-serif: 'Noto Serif KR', 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-en-serif: 'Cormorant Garamond', serif;
+      
+      --shadow-sm: 0 4px 20px rgba(26, 59, 52, 0.04);
+      --shadow-md: 0 10px 30px rgba(26, 59, 52, 0.08);
+      --shadow-lg: 0 20px 50px rgba(26, 59, 52, 0.12);
+      
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg-main);
+      color: var(--color-text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       2. 헤더 & 글로벌 내비게이션 (GNB 6대 구조)
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(250, 253, 253, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--color-border-light);
+      transition: var(--transition-smooth);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .logo {
+      font-family: var(--font-en-serif);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo span {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--color-accent-sage);
+      border-left: 1px solid var(--color-border);
+      padding-left: 8px;
+    }
+
+    .gnb-menu {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .gnb-menu a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-sub);
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .gnb-menu a:hover,
+    .gnb-menu a.active {
+      color: var(--color-primary);
+    }
+
+    .gnb-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width 0.3s ease;
+    }
+
+    .gnb-menu a:hover::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-quick-reorder {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      transition: var(--transition-smooth);
+    }
+
+    .btn-quick-reorder:hover {
+      background: #d8eae7;
+      transform: translateY(-1px);
+    }
+
+    .btn-cart {
+      position: relative;
+      padding: 8px;
+      font-size: 14px;
+      color: var(--color-primary);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      background: var(--color-accent-terracotta);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       3. 메인 히어로 (Water Ripple Canvas & 수채화 톤)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #F0F7F6 0%, #FAFDFD 70%);
+    }
+
+    #ripple-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .hero-badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--color-border);
+      padding: 6px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      color: var(--color-primary);
+      font-weight: 500;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--color-accent-terracotta);
+      font-weight: 700;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+      margin-bottom: 36px;
+      word-break: keep-all;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: var(--radius-full);
+      transition: var(--transition-smooth);
+      box-shadow: 0 6px 20px rgba(26, 59, 52, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: #132a25;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(26, 59, 52, 0.25);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--color-primary);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      transition: var(--transition-smooth);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       4. 4대 USP 벤토 그리드 (Bento Grid Cards)
+       ========================================================================== */
+    .section-padding {
+      padding: 100px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 60px;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-en-serif);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--color-accent-sage);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 34px;
+      font-weight: 600;
+      color: var(--color-primary);
+      line-height: 1.4;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .bento-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-accent-aqua);
+    }
+
+    .card-col-7 { grid-column: span 7; }
+    .card-col-5 { grid-column: span 5; }
+    .card-col-4 { grid-column: span 4; }
+    .card-col-8 { grid-column: span 8; }
+
+    .bento-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent-terracotta);
+      background: rgba(196, 122, 90, 0.1);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+
+    .bento-card h3 {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+
+    .bento-card p {
+      font-size: 15px;
+      color: var(--color-text-sub);
+      line-height: 1.7;
+    }
+
+    .process-timeline-mini {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .step-item {
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    .step-item.active {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-border);
+      margin: 0 auto 6px;
+    }
+
+    .step-item.active .step-dot {
+      background: var(--color-accent-terracotta);
+      box-shadow: 0 0 0 3px rgba(196, 122, 90, 0.2);
+    }
+
+    /* ==========================================================================
+       5. 실시간 Canvas 자수 각인 아틀리에 (P-07 / P-09)
+       ========================================================================== */
+    .custom-studio-section {
+      background: var(--color-bg-surface);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .studio-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .studio-preview-box {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      text-align: center;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      height: 340px;
+      margin: 0 auto 16px;
+      background: #FDFBF7;
+      border-radius: var(--radius-md);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px dashed var(--color-border);
+    }
+
+    #embroidery-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .towel-texture-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(240,235,225,0.3) 0, rgba(240,235,225,0.3) 2px, transparent 2px, transparent 6px);
+      pointer-events: none;
+    }
+
+    .studio-control-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    .input-embroidery {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fff;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .input-embroidery:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-primary-light);
+    }
+
+    .char-counter {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .radio-pill-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .radio-pill-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      background: #fff;
+      color: var(--color-text-sub);
+      transition: var(--transition-smooth);
+    }
+
+    .radio-pill-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .color-swatch-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px var(--color-border);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .color-swatch.active {
+      transform: scale(1.18);
+      box-shadow: 0 0 0 2px var(--color-primary);
+    }
+
+    /* ==========================================================================
+       6. 성수 플래그십 쇼룸 사전예약 & 1장 안심 체험팩
+       ========================================================================== */
+    .dual-banner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .feature-banner {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .banner-highlight {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-accent-terracotta);
+      margin-bottom: 12px;
+    }
+
+    .feature-banner h3 {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--color-primary);
+      margin-bottom: 14px;
+    }
+
+    /* ==========================================================================
+       7. 토스트 & 모달 (Sonner & Radix 스타일)
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast-card {
+      background: #ffffff;
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes toastIn {
+      from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 59, 52, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      max-width: 520px;
+      width: 100%;
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border);
+      animation: modalScale 0.25s ease;
+      position: relative;
+    }
+
+    @keyframes modalScale {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 22px;
+      color: var(--color-text-muted);
+    }
+
+    /* ==========================================================================
+       8. 푸터
+       ========================================================================== */
+    .site-footer {
+      background: #122823;
+      color: rgba(255, 255, 255, 0.75);
+      padding: 80px 0 40px;
+      font-size: 14px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-en-serif);
+      font-size: 26px;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      margin-bottom: 20px;
+      font-family: var(--font-serif);
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* 반응형 분기점 */
+    @media (max-width: 992px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .card-col-7, .card-col-5, .card-col-4, .card-col-8 { grid-column: span 1; }
+      .studio-wrapper { grid-template-columns: 1fr; }
+      .dual-banner-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .gnb-menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 스택 토스트 컨테이너 -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- 글로벌 헤더 -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          Flottelier
+          <span>플로뜰리에</span>
+        </a>
+
+        <nav>
+          <ul class="gnb-menu">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#ritual">RITUAL & CARE</a></li>
+            <li><a href="#shop">SHOP</a></li>
+            <li><a href="#studio">GIFT STUDIO</a></li>
+            <li><a href="#popup">POP-UP</a></li>
+            <li><a href="#community">COMMUNITY</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="btn-quick-reorder" onclick="triggerToast('1-Click 재구매: 이전 주문 옵션을 불러왔습니다.')">
+            1-Click 재구매
+          </button>
+          <button class="btn-cart" onclick="triggerToast('장바구니에 1개 상품이 담겨 있습니다.')">
+            🛒
+            <span class="cart-badge" id="cart-count">1</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 히어로 (WebGL/Canvas 물결 파동 인터랙션) -->
+  <section class="hero-section">
+    <canvas id="ripple-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge-wrap">
+        <span>🌿 100% 국산 4차 정련 완료</span>
+        <span>•</span>
+        <span>4無 화학 안심 검증</span>
+      </div>
+      <h1 class="hero-title">
+        삶을 필요 없이 바로 쓰는,<br>
+        시간과 손길이 만드는 <em>고요한 에코 리추얼</em>
+      </h1>
+      <p class="hero-desc">
+        택배 상자를 여는 순간부터 뽀송하게. 전통 소창의 번거로운 정련 과정을 공방의 4차 정련으로 완벽 해결했습니다.<br>
+        일반 타월 대비 3배 빠른 건조와 형광증백제 0.00%의 순수한 자연을 경험해 보세요.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn-primary" onclick="openModal('trial-modal')">1장 안심 체험팩 신청 (100% 환급)</button>
+        <button class="btn-secondary" onclick="openModal('popup-modal')">성수 팝업 쇼룸 사전예약</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4대 USP 벤토 그리드 (Bento Grids) -->
+  <section class="section-padding" id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Philosophy & Verification</div>
+        <h2 class="section-title">자연의 숨결을 온전히 담아내는<br>플로뜰리에의 4가지 약속</h2>
+      </div>
+
+      <div class="bento-grid">
+        <!-- 4차 정련 완성 보증 (Col 7) -->
+        <div class="bento-card card-col-7">
+          <div>
+            <span class="bento-tag">Completed Refining</span>
+            <h3>4차 정련 완료 보증제</h3>
+            <p>전통 소창의 가장 큰 장애물이었던 "삶고 길들이는 과정"을 공방에서 4차례에 걸쳐 완벽히 마쳤습니다. 받자마자 세안과 샤워에 바로 사용하실 수 있습니다.</p>
+          </div>
+          <div class="process-timeline-mini">
+            <div class="step-item active"><div class="step-dot"></div>1차 온수 세척</div>
+            <div class="step-item active"><div class="step-dot"></div>2차 가마솥 삶기</div>
+            <div class="step-item active"><div class="step-dot"></div>3차 자연 건조</div>
+            <div class="step-item active"><div class="step-dot"></div>4차 결 다듬기</div>
+          </div>
+        </div>
+
+        <!-- 4無 화학 안심 검증 (Col 5) -->
+        <div class="bento-card card-col-5">
+          <div>
+            <span class="bento-tag">Zero Chemistry</span>
+            <h3>4無 화학 안심 검증</h3>
+            <p>무형광·무표백·무염색·무향료. 독일 더마테스트 Excellent 등급 및 한국의류시험연구원(KATRI) 안전 인증을 획득했습니다.</p>
+          </div>
+          <button class="btn-secondary" style="margin-top: 20px; padding: 8px 16px; font-size: 13px;" onclick="openModal('cert-modal')">
+            인증서 원본 확인 📄
+          </button>
+        </div>
+
+        <!-- 3배 빠른 건조와 위생 (Col 5) -->
+        <div class="bento-card card-col-5">
+          <div>
+            <span class="bento-tag">3x Fast Drying</span>
+            <h3>3배 빠른 초고속 건조</h3>
+            <p>통기성이 뛰어난 격자 직조 구조로 습한 욕실에서도 세균 번식 걱정 없이 3배 빠르게 건조되어 냄새가 나지 않습니다.</p>
+          </div>
+        </div>
+
+        <!-- 실시간 자수 각인 (Col 7) -->
+        <div class="bento-card card-col-7">
+          <div>
+            <span class="bento-tag">Atelier Embroidery</span>
+            <h3>나만의 리추얼 각인</h3>
+            <p>소중한 사람의 이름이나 의미 있는 단어를 새겨 세상에 단 하나뿐인 에코 리추얼 수건을 선물하세요. 실시간 캔버스 스튜디오에서 폰트와 실 색상을 바로 확인하실 수 있습니다.</p>
+          </div>
+          <a href="#studio" class="btn-primary" style="margin-top: 20px; align-self: flex-start; padding: 10px 20px; font-size: 13px;">
+            자수 스튜디오 체험하기 ✨
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 실시간 Canvas 자수 각인 스튜디오 (GIFT / SHOP) -->
+  <section class="section-padding custom-studio-section" id="studio">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Real-time Canvas Studio</div>
+        <h2 class="section-title">나만의 이니셜을 새기는<br>실시간 자수 커스텀 아틀리에</h2>
+      </div>
+
+      <div class="studio-wrapper">
+        <!-- 좌측 Canvas 실시간 프리뷰 -->
+        <div class="studio-preview-box">
+          <div class="canvas-container">
+            <div class="towel-texture-bg"></div>
+            <canvas id="embroidery-canvas" width="440" height="340"></canvas>
+          </div>
+          <p style="font-size: 13px; color: var(--color-text-muted);">
+            🔍 500% HD 실물 자수 질감 합성 렌더링
+          </p>
+        </div>
+
+        <!-- 우측 커스텀 컨트롤러 -->
+        <div class="studio-control-panel">
+          <div class="control-group">
+            <label for="custom-text">각인 문구 입력 (최대 15자)</label>
+            <input type="text" id="custom-text" class="input-embroidery" value="Flottelier Ritual" maxlength="15" placeholder="영문 또는 한글 이니셜 입력">
+            <div class="char-counter"><span id="char-count">17</span> / 15자</div>
+          </div>
+
+          <div class="control-group">
+            <label>폰트 스타일 선택</label>
+            <div class="radio-pill-group">
+              <button class="radio-pill-btn active" data-font="Cormorant Garamond, serif" onclick="setFont(this)">클래식 세리프</button>
+              <button class="radio-pill-btn" data-font="Noto Serif KR, serif" onclick="setFont(this)">단정 명조</button>
+              <button class="radio-pill-btn" data-font="Noto Sans KR, sans-serif" onclick="setFont(this)">모던 고딕</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>자수 실 색상 선택</label>
+            <div class="color-swatch-group">
+              <div class="color-swatch active" style="background: #1A3B34;" data-color="#1A3B34" onclick="setColor(this)" title="포레스트 딥"></div>
+              <div class="color-swatch" style="background: #C47A5A;" data-color="#C47A5A" onclick="setColor(this)" title="테라코타 골드"></div>
+              <div class="color-swatch" style="background: #7E8D7F;" data-color="#7E8D7F" onclick="setColor(this)" title="소프트 세이지"></div>
+              <div class="color-swatch" style="background: #D97706;" data-color="#D97706" onclick="setColor(this)" title="빈티지 오커"></div>
+              <div class="color-swatch" style="background: #555B60;" data-color="#555B60" onclick="setColor(this)" title="슬레이트 그레이"></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px; display: flex; gap: 12px;">
+            <button class="btn-primary" style="flex: 1;" onclick="addCustomToCart()">
+              이 조합으로 선물 담기 (₩24,000)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1장 안심 체험팩 & 성수 팝업 예약 듀얼 배너 -->
+  <section class="section-padding" id="popup">
+    <div class="container">
+      <div class="dual-banner-grid">
+        <div class="feature-banner">
+          <div>
+            <div class="banner-highlight">ZERO RISK TRIAL</div>
+            <h3>1장 안심 체험팩<br>(본품 구매 시 100% 환급)</h3>
+            <p style="color: var(--color-text-sub); margin-bottom: 24px;">
+              소창 수건을 처음 써보시는 분들을 위해 1장 체험팩을 제공합니다. 사용 후 본품 세트 구매 시 체험비를 전액 쿠폰으로 환급해 드립니다.
+            </p>
+          </div>
+          <button class="btn-secondary" onclick="openModal('trial-modal')">체험팩 신청하기 ➔</button>
+        </div>
+
+        <div class="feature-banner">
+          <div>
+            <div class="banner-highlight">SEONGSU FLAGSHIP SHOWROOM</div>
+            <h3>성수 팝업스토어<br>오프라인 사전예약</h3>
+            <p style="color: var(--color-text-sub); margin-bottom: 24px;">
+              성수동 쇼룸에서 4차 정련 소창의 부드러움을 직접 만져보고, 현장 1:1 자수 각인 아틀리에를 체험해 보세요. (타임슬롯 30분 단위 운영)
+            </p>
+          </div>
+          <button class="btn-primary" onclick="openModal('popup-modal')">방문 시간 예약하기 ➔</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 모달 1: 1장 안심 체험팩 모달 -->
+  <div class="modal-backdrop" id="trial-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('trial-modal')">×</button>
+      <h3 style="font-family: var(--font-serif); font-size: 24px; color: var(--color-primary); margin-bottom: 12px;">
+        1장 안심 체험팩 신청
+      </h3>
+      <p style="font-size: 14px; color: var(--color-text-sub); margin-bottom: 24px;">
+        4차 정련된 순면 강화 소창 수건 1장을 부담 없이 먼저 써보세요.<br>
+        수령 후 30일 이내 본품 5장/10장 세트 구매 시 <strong>체험비(₩6,900)를 100% 전액 할인 쿠폰</strong>으로 돌려드립니다.
+      </p>
+      <button class="btn-primary" style="width: 100%;" onclick="submitTrial()">
+        체험팩 무료배송 신청하기
+      </button>
+    </div>
+  </div>
+
+  <!-- 모달 2: 성수 팝업 예약 모달 -->
+  <div class="modal-backdrop" id="popup-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('popup-modal')">×</button>
+      <h3 style="font-family: var(--font-serif); font-size: 24px; color: var(--color-primary); margin-bottom: 12px;">
+        성수 플래그십 쇼룸 예약
+      </h3>
+      <p style="font-size: 14px; color: var(--color-text-sub); margin-bottom: 20px;">
+        📍 서울 성동구 연무장길 플로뜰리에 아틀리에
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+        <label style="font-size: 13px; font-weight: 600;">희망 방문 시간 선택</label>
+        <div class="radio-pill-group">
+          <button class="radio-pill-btn active">14:00 (잔여 2석)</button>
+          <button class="radio-pill-btn">15:00 (잔여 4석)</button>
+          <button class="radio-pill-btn">16:30 (잔여 1석)</button>
+          <button class="radio-pill-btn">18:00 (마감)</button>
+        </div>
+      </div>
+      <button class="btn-primary" style="width: 100%;" onclick="submitBooking()">
+        예약 확정 및 알림톡 받기
+      </button>
+    </div>
+  </div>
+
+  <!-- 모달 3: 인증서 원본 모달 -->
+  <div class="modal-backdrop" id="cert-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('cert-modal')">×</button>
+      <h3 style="font-family: var(--font-serif); font-size: 22px; color: var(--color-primary); margin-bottom: 12px;">
+        공식 시험성적서 & 인증 원본
+      </h3>
+      <div style="background: var(--color-bg-surface); padding: 20px; border-radius: var(--radius-md); font-size: 13px; line-height: 1.8; margin-bottom: 20px;">
+        • <strong>독일 Dermatest</strong>: 무자극 최고등급 (Excellent) 성적서 획득<br>
+        • <strong>한국의류시험연구원(KATRI)</strong>: 형광증백제 불검출 (0.00%) 판정<br>
+        • <strong>유해화학물질</strong>: 포름알데히드 및 아릴아민 4無 완전 검증
+      </div>
+      <button class="btn-secondary" style="width: 100%;" onclick="closeModal('cert-modal')">닫기</button>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">Flottelier</div>
+          <p style="line-height: 1.8;">
+            플로뜰리에 (Flottelier)는 삶을 필요 없이 바로 쓰는 4차 정련 강화 소창과 나만의 리추얼 각인을 통해 매일의 씻는 시간을 고요한 힐링으로 바꿉니다.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#about">브랜드 스토리</a></li>
+            <li><a href="#ritual">4단계 리추얼 가이드</a></li>
+            <li><a href="#shop">소창 라인업</a></li>
+            <li><a href="#studio">자수 각인 스튜디오</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul>
+            <li><a href="#">세탁 & 관리법 PDF</a></li>
+            <li><a href="#">1장 체험팩 환급 안내</a></li>
+            <li><a href="#">피부 미맞춤 100% 교환</a></li>
+            <li><a href="#">기업 및 대량 선물 문의</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Showroom</h4>
+          <p style="line-height: 1.8;">
+            서울시 성동구 연무장길 플로뜰리에 성수<br>
+            운영시간: 화-일 11:00 - 20:00 (월 휴무)<br>
+            고객센터: 1600-0000
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Flottelier Atelier Inc. All rights reserved.</div>
+        <div>개인정보처리방침 | 이용약관 | 사업자정보확인</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 인터랙션 및 Canvas 자수 렌더러 스크립트 -->
+  <script>
+    /* ==========================================
+       1. 토스트 알림 (Sonner Style)
+       ========================================== */
+    function triggerToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast-card';
+      toast.innerHTML = `<span>✨</span> <div>${message}</div>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    /* ==========================================
+       2. 모달 제어
+       ========================================== */
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('show');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('show');
+    }
+
+    function submitTrial() {
+      closeModal('trial-modal');
+      triggerToast('1장 안심 체험팩 신청 완료! 100% 환급 쿠폰이 발급되었습니다.');
+    }
+
+    function submitBooking() {
+      closeModal('popup-modal');
+      triggerToast('성수 쇼룸 예약이 확정되었습니다. 알림톡을 확인해 주세요.');
+    }
+
+    /* ==========================================
+       3. 실시간 2D Canvas 자수 각인 엔진
+       ========================================== */
+    const canvas = document.getElementById('embroidery-canvas');
+    const ctx = canvas.getContext('2d');
+    const textInput = document.getElementById('custom-text');
+    const charCount = document.getElementById('char-count');
+
+    let currentFont = 'Cormorant Garamond, serif';
+    let currentColor = '#1A3B34';
+
+    function renderEmbroidery() {
+      const text = textInput.value || 'Flottelier';
+      charCount.innerText = text.length;
+
+      // 캔버스 클리어
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 소창 패브릭 베이스 톤
+      ctx.fillStyle = '#FDFBF7';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 패브릭 실 질감 격자 표현
+      ctx.strokeStyle = 'rgba(230, 222, 210, 0.4)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 12) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 12) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // 라벨 직조 태그 배경
+      ctx.fillStyle = '#FAF7F0';
+      ctx.shadowColor = 'rgba(0,0,0,0.06)';
+      ctx.shadowBlur = 10;
+      ctx.shadowOffsetY = 4;
+      ctx.fillRect(50, 110, 340, 120);
+      ctx.shadowColor = 'transparent';
+
+      // 라벨 스티치 라인
+      ctx.strokeStyle = '#D5CEBE';
+      ctx.setLineDash([4, 4]);
+      ctx.strokeRect(58, 118, 324, 104);
+      ctx.setLineDash([]);
+
+      // 자수 텍스트 렌더링
+      ctx.font = `italic 600 28px ${currentFont}`;
+      ctx.fillStyle = currentColor;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      // 약간의 실 질감 그림자 효과
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+      ctx.shadowBlur = 1;
+      ctx.shadowOffsetX = 1;
+      ctx.shadowOffsetY = 1;
+
+      ctx.fillText(text, canvas.width / 2, 170);
+      ctx.shadowColor = 'transparent';
+    }
+
+    textInput.addEventListener('input', renderEmbroidery);
+
+    function setFont(btn) {
+      document.querySelectorAll('.radio-pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFont = btn.getAttribute('data-font');
+      renderEmbroidery();
+    }
+
+    function setColor(el) {
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      currentColor = el.getAttribute('data-color');
+      renderEmbroidery();
+    }
+
+    function addCustomToCart() {
+      const text = textInput.value;
+      triggerToast(`자수 문구 [${text}] 각인 수건이 장바구니에 담겼습니다.`);
+      const countEl = document.getElementById('cart-count');
+      countEl.innerText = parseInt(countEl.innerText) + 1;
+    }
+
+    // 초기 렌더링
+    renderEmbroidery();
+
+    /* ==========================================
+       4. WebGL/Canvas 잔잔한 마우스 물결 (Izanami 레퍼런스)
+       ========================================== */
+    const rippleCanvas = document.getElementById('ripple-canvas');
+    const rCtx = rippleCanvas.getContext('2d');
+    let width, height;
+    let ripples = [];
+
+    function resizeRipple() {
+      width = rippleCanvas.width = rippleCanvas.offsetWidth;
+      height = rippleCanvas.height = rippleCanvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeRipple);
+    resizeRipple();
+
+    window.addEventListener('mousemove', (e) => {
+      const rect = rippleCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x >= 0 && x <= width && y >= 0 && y <= height) {
+        if (Math.random() > 0.6) {
+          ripples.push({ x, y, radius: 2, alpha: 0.45 });
+        }
+      }
+    });
+
+    function animateRipple() {
+      rCtx.clearRect(0, 0, width, height);
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.radius += 1.2;
+        r.alpha -= 0.008;
+
+        if (r.alpha <= 0) {
+          ripples.splice(i, 1);
+          continue;
+        }
+
+        rCtx.beginPath();
+        rCtx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        rCtx.strokeStyle = `rgba(168, 197, 198, ${r.alpha})`;
+        rCtx.lineWidth = 1.5;
+        rCtx.stroke();
+      }
+      requestAnimationFrame(animateRipple);
+    }
+    animateRipple();
+  </script>
+</body>
+</html>

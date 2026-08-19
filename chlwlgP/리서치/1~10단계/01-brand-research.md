@@ -23,3 +23,18 @@
 * **Tone**: 고요하고 맑으며 단정하고 친절한 어조
 * **Visual Mood**: 저채도 아이보리/순백 베이지, 부드러운 물결 수채화, 80% 이상의 넉넉한 여백
 * **Forbidden Tropes**: 자극적인 할인 배너 남발, 네온 그래픽, 과도한 팝업 광고 배제
+
+---
+
+## 4. 글로벌 600선 확장 벤치마킹 레퍼런스 (신규 추가)
+
+| 브랜드명 | 공식 URL | 벤치마킹 영역 | 플로뜰리에 접목 포인트 |
+|---|---|---|---|
+| **Aesop** | https://www.aesop.com | 철학적 스토리텔링 & 절제된 미학 | 고요한 라이프스타일, 세리프 폰트와 여백, 원료의 진정성 전달 |
+| **Patagonia** | https://www.patagonia.com | 지속가능성 & 환경 철학 투명성 | 100% 천연 순면 소창, 무형광·무표백 공정 및 에코 가치 선언 |
+| **Dr. Bronner's** | https://www.drbronner.com | 성분 안전성 & 인증 체계 | 4無(무형광/무표백/무염색/무향료) 공정 투명 공개 및 더마테스트 인증 |
+| **Tekla Fabrics** | https://teklafabrics.com | 패브릭 질감 & 텍스타일 에디토리얼 | 소창 특유의 통기성, 촘촘한 직조감 화보 및 감성 패브릭 룩북 |
+| **Carl Hansen & Søn** | https://www.carlhansen.com | 전통 장인 수작업 제작 공정 다큐 | 4차 정련 장인의 손길과 가마솥 삶기 공정 비디오 아카이빙 |
+| **Santa Maria Novella** | https://buy.smnovella.kr | 800년 아포테케리 헤리티지 연출 | 무화학 순수 소창의 고유한 전통 제법과 약국풍 신뢰도 강화 |
+| **Frama CPH** | https://framacph.com | 북유럽 오가닉 미니멀 라이프스타일 | 따뜻한 자연광, 우드/스톤 질감과 어우러지는 순백 소창 룸 셋팅 |
+| **Reformation** | https://www.thereformation.com | 환경 영향 수치화 (Eco Impact) | 수건 1장당 절감된 화학물질 및 탄소 배출량 실시간 표기 |
